@@ -23,7 +23,7 @@
 
 @class GCDAsyncSocket;
 @protocol ChatConnectionDelegate;
-@class ChatMessage;
+@class Message;
 @class CLLocation;
 @class Client;
 
@@ -33,7 +33,7 @@ typedef enum {
     ChatConnectionStateSignedIn
 } ChatConnectionState;
 
-@interface ChatConnection : NSObject {
+@interface ServerConnection : NSObject {
     NSMutableArray *_connectedClients;
 }
 
@@ -44,13 +44,11 @@ typedef enum {
 
 - (NSArray *)connectedClients;
 
-- (id)initWithClientId:(NSString *)clientId;
-
 - (void)connect;
 
 - (void)disconnect;
 
-- (void)send:(ChatMessage *)message;
+- (void)send:(Message *)message;
 
 - (void)sendLocation:(CLLocation *)location;
 
@@ -63,15 +61,15 @@ typedef enum {
 
 @protocol ChatConnectionDelegate
 
-- (void)chatConnnection:(ChatConnection *)conn didReceiveError:(NSError*)error;
+- (void)chatConnnection:(ServerConnection *)conn didReceiveError:(NSError*)error;
 
-- (void)chatConnection:(ChatConnection *)conn didReceiveMessage:(ChatMessage *)message;
+- (void)chatConnection:(ServerConnection *)conn didReceiveMessage:(Message *)message;
 
-- (void)chatConnection:(ChatConnection *)conn didReceiveLocation:(CLLocation *)loc forClientID:(NSString *)clientId;
+- (void)chatConnection:(ServerConnection *)conn didReceiveLocation:(CLLocation *)loc forClientID:(NSString *)clientId;
 
-- (void)chatConnection:(ChatConnection *)conn clientDidConnect:(Client*)client;
+- (void)chatConnection:(ServerConnection *)conn clientDidConnect:(Client*)client;
 
-- (void)chatConnection:(ChatConnection *)conn clientDidDisconnect:(NSString*)clientId;
+- (void)chatConnection:(ServerConnection *)conn clientDidDisconnect:(NSString*)clientId;
 
-- (CLLocation *)chatConnectionCurrentLocation:(ChatConnection *)conn;
+- (CLLocation *)chatConnectionCurrentLocation:(ServerConnection *)conn;
 @end

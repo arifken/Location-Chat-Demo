@@ -19,33 +19,28 @@
 */
 
 #import <Foundation/Foundation.h>
-#import "ChatConnection.h"
+#import "ServerConnection.h"
 #import "GCDAsyncSocket.h"
-#import "ChatMessage.h"
 #import "CLLocation+String.h"
 #import "Client.h"
+#import "Message.h"
 #import "Constants.h"
 
-NSString const *ACTION_CONNECTED = @"con";
-NSString const *ACTION_DISCONNECTED = @"dis";
-NSString const *ACTION_MESSAGE = @"msg";
-NSString const *ACTION_LOCATION_REQUEST = @"loc_req";
-NSString const *ACTION_LOCATION_RESPONSE = @"loc_res";
-NSString const *ACTION_HEARTBEAT= @"hb";
+NSString const *ACTION_CONNECTED = @"con"; // someone connected to the server (could also be self)
+NSString const *ACTION_DISCONNECTED = @"dis"; // someone disconnected
+NSString const *ACTION_MESSAGE = @"msg"; // a chat message was submitted
+NSString const *ACTION_LOCATION_REQUEST = @"loc_req"; // someone is requesting our current location
+NSString const *ACTION_LOCATION_RESPONSE = @"loc_res"; // someone is broadcasting their location
+NSString const *ACTION_HEARTBEAT= @"hb"; // the server is checking to make sure we are still connected
 
-static const float kDefaultTimeout = -1.0;
+static const float kDefaultTimeout = -1.0; // set no timeout period for the socket (the server will manage timeouts)
 
-@implementation ChatConnection
+@implementation ServerConnection
 
+#pragma mark -
+#pragma mark Ctor
+//============================================================================================================
 
-- (id)initWithClientId:(NSString *)clientId {
-    self = [self init];
-    if (self) {
-        self.clientId = clientId;
-    }
-
-    return self;
-}
 
 - (id)init {
     self = [super init];
@@ -60,6 +55,14 @@ static const float kDefaultTimeout = -1.0;
 }
 
 
+#pragma mark -
+#pragma mark Actions
+//============================================================================================================
+
+/**
+* Open the socket connection to the server. We get an event when we are connected successfully, and we use that event
+* to register with the server (using our client ID)
+*/
 - (void)connect {
     NSError *error = nil;
     [self.socket connectToHost:@"localhost" onPort:3000 error:&error];
@@ -69,16 +72,28 @@ static const float kDefaultTimeout = -1.0;
 }
 
 
+/**
+* send the FIN signal to disconnect from the server. We get an event upon disconnect, where we clear out the current
+* connection state
+*/
 - (void)disconnect {
     [self.socket disconnect];
 }
 
 
-- (void)send:(ChatMessage *)message {
+/**
+* Send a message to the server.
+*
+* This method serializes the Message object and writes it to the socket
+*
+*/
+- (void)send:(Message *)message {
     if (self.socket.isConnected) {
         [self.socket writeData:[message jsonData] withTimeout:kDefaultTimeout tag:0];
     }
 }
+
+
 
 - (void)sendLocation:(CLLocation *)location {
     if (self.socket.isConnected && location) {
@@ -122,7 +137,7 @@ static const float kDefaultTimeout = -1.0;
     if (responseObject) {
         NSString *action = [responseObject objectForKey:@"action"];
         if ([action caseInsensitiveCompare:(NSString *) ACTION_MESSAGE] == NSOrderedSame) {
-            ChatMessage *message = [ChatMessage messageWithJSONObject:responseObject];
+            Message *message = [Message messageWithJSONObject:responseObject];
             [self.delegate chatConnection:self didReceiveMessage:message];
         }
 
@@ -262,6 +277,10 @@ static const float kDefaultTimeout = -1.0;
  * this delegate method will be called before the disconnect method returns.
 **/
 - (void)socketDidDisconnect:(GCDAsyncSocket *)sock withError:(NSError *)err {
+    self.clientId = nil;
+    @synchronized (_connectedClients) {
+        [_connectedClients removeAllObjects];
+    }
     NSLog(@"socketDidDisconnect, error = %@", err);
     [self.delegate chatConnection:self clientDidDisconnect:self.clientId];
     self.connectionState = ChatConnectionStateDisconnected;

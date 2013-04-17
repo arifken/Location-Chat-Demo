@@ -20,7 +20,7 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
-#import "ChatConnection.h"
+#import "ServerConnection.h"
 #import "SignInView.h"
 
 @class CLLocationManager;
@@ -35,8 +35,12 @@
 
 @property(strong) CLLocation *currentLocation;
 @property(strong) CLLocationManager *locationManager;
-@property(strong) ChatConnection *connection;
+@property(strong) ServerConnection *connection;
 @property(strong) SignInView *signInView;
 
-- (void)showClientOnMap:(NSString *)string;
+/**
+* Presents the MapViewController modally, and focuses on the pin of the clientId provided
+*/
+- (void)showClientOnMap:(NSString *)clientId;
+
 @end

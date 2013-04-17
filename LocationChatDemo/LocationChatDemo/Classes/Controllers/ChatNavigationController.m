@@ -23,11 +23,16 @@
 #import "Client.h"
 #import "ChatViewController.h"
 #import "Constants.h"
-#import "ChatMessage.h"
+#import "Message.h"
 #import "MapViewController.h"
 
 
 @implementation ChatNavigationController
+
+#pragma mark -
+#pragma mark Ctor
+//============================================================================================================
+
 
 - (id)init {
     ChatViewController *chatViewController = [[ChatViewController alloc] init];
@@ -43,7 +48,7 @@
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.connection = [[ChatConnection alloc] init];
+        self.connection = [[ServerConnection alloc] init];
         self.connection.delegate = self;
 
         self.locationManager = [[CLLocationManager alloc] init];
@@ -54,9 +59,16 @@
 }
 
 
+#pragma mark -
+#pragma mark Lifecycle
+//============================================================================================================
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    // We want to observe changes in connectionState so we know whether or not to enable/disable the UI. If the
+    // socket gets disconnected, the state will change and we can automatically notify the relevant views
     [self.connection addObserver:self forKeyPath:@"connectionState" options:NSKeyValueObservingOptionNew context:NULL];
 
     self.signInView = [[SignInView alloc] init];
@@ -95,8 +107,23 @@
     [self connectIfNeeded];
 }
 
+- (void)dealloc {
+    [self.locationManager stopUpdatingLocation];
+    [self.connection removeObserver:self forKeyPath:@"connectionState"];
+}
+
+
+#pragma mark -
+#pragma mark Actions
+//============================================================================================================
+
+/**
+* Connect to the chat server (so long as we are not signed in or in the process of signing in..
+* There are two parts to the sign in process
+*   1. Connect to the socket
+*   2. Sign in by setting the socket's "client ID" (cid)
+*/
 - (void)connectIfNeeded {
-// if we aren't signed in or in the process of signing in...
     if (self.connection.connectionState == ChatConnectionStateDisconnected) {
         // check if we have a client ID set
         if (self.connection.clientId) {
@@ -105,29 +132,20 @@
     }
 }
 
-
-- (void)dealloc {
-    NSLog(@"dealloc");
-    [self.locationManager stopUpdatingLocation];
-    [self.connection removeObserver:self forKeyPath:@"connectionState"];
-}
-
+/**
+* Send a 'disconnect' message to the socket. We will get a callback from the ServerConnection when we have been
+* successfully disconnected
+*/
 - (void)disconnect {
     [self.connection disconnect];
 }
-
-#pragma mark -
-#pragma mark Clients
-//============================================================================================================
-
-
 
 #pragma mark -
 #pragma mark Connection Events
 //============================================================================================================
 
 
-- (void)chatConnection:(ChatConnection *)conn didReceiveMessage:(ChatMessage *)message {
+- (void)chatConnection:(ServerConnection *)conn didReceiveMessage:(Message *)message {
     // if the message has a location, update the client's location...
     Client *client = [self.connection clientForID:message.clientId];
     if (message.location) {
@@ -140,8 +158,7 @@
 }
 
 
-- (void)chatConnection:(ChatConnection *)conn didReceiveLocation:(CLLocation *)loc forClientID:(NSString *)clientId {
-    NSLog(@"need to update location: %@ for client: %@", loc, clientId);
+- (void)chatConnection:(ServerConnection *)conn didReceiveLocation:(CLLocation *)loc forClientID:(NSString *)clientId {
     Client *client = [self.connection clientForID:clientId];
     if (client) {
         client.location = loc;
@@ -151,36 +168,42 @@
     }];
 }
 
-- (CLLocation *)chatConnectionCurrentLocation:(ChatConnection *)conn {
+- (CLLocation *)chatConnectionCurrentLocation:(ServerConnection *)conn {
     return self.currentLocation;
 }
 
-- (void)chatConnection:(ChatConnection *)conn clientDidConnect:(Client *)client {
+- (void)chatConnection:(ServerConnection *)conn clientDidConnect:(Client *)client {
+    // allow the map and client view controllers to update accordingly
     [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *) kClientDidConnectNotification object:nil userInfo:@{
             kClientKey : client
     }];
 }
 
-- (void)chatConnection:(ChatConnection *)conn clientDidDisconnect:(NSString *)clientId {
+- (void)chatConnection:(ServerConnection *)conn clientDidDisconnect:(NSString *)clientId {
+    // allow the map and client view controllers to update accordingly
     [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *) kClientDidDisconnectNotification object:nil userInfo:@{
             kClientIDKey : clientId
     }];
 
     // if we disconnected, show sign in prompt
-    if ([clientId caseInsensitiveCompare:[self.connection clientId]] == NSOrderedSame) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            self.connection.clientId = nil;
-            [self connectIfNeeded];
-        });
-    }
+//    if ([clientId caseInsensitiveCompare:[self.connection clientId]] == NSOrderedSame) {
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            self.connection.clientId = nil;
+//        });
+//    }
 }
 
-- (void)chatConnnection:(ChatConnection *)conn didReceiveError:(NSError *)error {
+- (void)chatConnnection:(ServerConnection *)conn didReceiveError:(NSError *)error {
     dispatch_async(dispatch_get_main_queue(), ^{
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
         [alertView show];
     });
 }
+
+
+#pragma mark -
+#pragma mark Other Events
+//============================================================================================================
 
 
 - (void)signInView:(SignInView *)signInView didLoginWithClientID:(NSString *)clientID {
@@ -223,14 +246,14 @@
     // ask for location update
     [self.connection requestLocationForClientWithID:clientId];
 
-    void(^showMapController)() = ^{
+    void(^showMapController)() = [^{
         MapViewController *mapViewController = [[MapViewController alloc] init];
         mapViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
         [self presentViewController:mapViewController animated:YES completion:^{
             // on complete, focus on selected client
             [mapViewController zoomToClientWithID:clientId];
         }];
-    };
+    } copy];
 
 
     showMapController = [showMapController copy];

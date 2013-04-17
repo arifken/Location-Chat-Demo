@@ -29,11 +29,11 @@
 		6B60D37B171E41800014A740 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B60D369171E41800014A740 /* CoreLocation.framework */; };
 		6B60D37C171E41800014A740 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B60D36A171E41800014A740 /* CFNetwork.framework */; };
 		6B60D37D171E41A30014A740 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B60D354171E41020014A740 /* GCDAsyncSocket.m */; };
-		D3BC8206929AE3F761708409 /* ChatConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC8F674B359039019E7BA7 /* ChatConnection.m */; };
+		D3BC8206929AE3F761708409 /* ServerConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC8F674B359039019E7BA7 /* ServerConnection.m */; };
 		D3BC8262B7A3513FC0D8E549 /* ClientsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC8CEC0453FEE8AFEC428A /* ClientsViewController.m */; };
 		D3BC829A05A30E6D46E141FB /* CLLocation+String.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC8F3BCB2A62F9D2A66C01 /* CLLocation+String.m */; };
 		D3BC82B9A1FDFD8F22D3ECBB /* SignInView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC8E5EB1F901853579ACEE /* SignInView.m */; };
-		D3BC82E74E0C1198D352AFE4 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC8B0AAF81F343A85F55CA /* ChatMessage.m */; };
+		D3BC82E74E0C1198D352AFE4 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC8B0AAF81F343A85F55CA /* Message.m */; };
 		D3BC8309C6186EA4B23BEBB0 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3BC893653486BE38C315FB9 /* SenTestingKit.framework */; };
 		D3BC83D6518338FCBC026A41 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3BC80B74B6FCB41FE417162 /* InfoPlist.strings */; };
 		D3BC84232667A49E770495B1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BC8943DF2C8BD3077B89C9 /* Default-568h@2x.png */; };
@@ -113,7 +113,7 @@
 		D3BC865E3293F3A1999A9F71 /* LocationChatDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = "LocationChatDemoTests-Info.plist"; sourceTree = "<group>"; };
 		D3BC866BFCE307FDBA54393E /* ClientsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientsViewController.h; sourceTree = "<group>"; };
 		D3BC8693D4E5F9A9694712C9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		D3BC86987B1E34E951011EDE /* ChatMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessage.h; sourceTree = "<group>"; };
+		D3BC86987B1E34E951011EDE /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
 		D3BC86EE346C00AE9330F687 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		D3BC8703846AEAEC473B0379 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D3BC88477B3B08D78F5C6C7E /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
@@ -126,8 +126,8 @@
 		D3BC8A6AB16430BC6796FCD7 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
 		D3BC8AED5A46A2CC5BD3BEEA /* ClientTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientTableViewCell.h; sourceTree = "<group>"; };
 		D3BC8AF9EB64D5B3A55FEE85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D3BC8B0AAF81F343A85F55CA /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessage.m; sourceTree = "<group>"; };
-		D3BC8B5D5122A920650DE414 /* ChatConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatConnection.h; sourceTree = "<group>"; };
+		D3BC8B0AAF81F343A85F55CA /* Message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Message.m; sourceTree = "<group>"; };
+		D3BC8B5D5122A920650DE414 /* ServerConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerConnection.h; sourceTree = "<group>"; };
 		D3BC8BDCED33D9F50A290B99 /* 07-map-marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "07-map-marker@2x.png"; sourceTree = "<group>"; };
 		D3BC8C1D59AAF03771AB07BC /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		D3BC8C7E717E2DD154F4816B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
@@ -137,7 +137,7 @@
 		D3BC8DFD3236C1EBBD9C7113 /* ChatNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatNavigationController.m; sourceTree = "<group>"; };
 		D3BC8E5EB1F901853579ACEE /* SignInView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInView.m; sourceTree = "<group>"; };
 		D3BC8F3BCB2A62F9D2A66C01 /* CLLocation+String.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLLocation+String.m"; sourceTree = "<group>"; };
-		D3BC8F674B359039019E7BA7 /* ChatConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatConnection.m; sourceTree = "<group>"; };
+		D3BC8F674B359039019E7BA7 /* ServerConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerConnection.m; sourceTree = "<group>"; };
 		D3BC8F6AAB53C3D79F848D41 /* ChatInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatInputView.h; sourceTree = "<group>"; };
 		D3BC8FE9903CABAD24F4A123 /* Client.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Client.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -253,8 +253,8 @@
 		D3BC87E15D61109401B79940 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				D3BC8B5D5122A920650DE414 /* ChatConnection.h */,
-				D3BC8F674B359039019E7BA7 /* ChatConnection.m */,
+				D3BC8B5D5122A920650DE414 /* ServerConnection.h */,
+				D3BC8F674B359039019E7BA7 /* ServerConnection.m */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -278,8 +278,8 @@
 			children = (
 				D3BC83FC726DF705F72834BB /* Client.h */,
 				D3BC8FE9903CABAD24F4A123 /* Client.m */,
-				D3BC86987B1E34E951011EDE /* ChatMessage.h */,
-				D3BC8B0AAF81F343A85F55CA /* ChatMessage.m */,
+				D3BC86987B1E34E951011EDE /* Message.h */,
+				D3BC8B0AAF81F343A85F55CA /* Message.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -478,8 +478,8 @@
 				D3BC82B9A1FDFD8F22D3ECBB /* SignInView.m in Sources */,
 				D3BC849C3F447FFC1011580F /* ChatInputView.m in Sources */,
 				D3BC8A791D47D13A5F117F65 /* Client.m in Sources */,
-				D3BC82E74E0C1198D352AFE4 /* ChatMessage.m in Sources */,
-				D3BC8206929AE3F761708409 /* ChatConnection.m in Sources */,
+				D3BC82E74E0C1198D352AFE4 /* Message.m in Sources */,
+				D3BC8206929AE3F761708409 /* ServerConnection.m in Sources */,
 				D3BC8F9CBF3CC268586F9423 /* Constants.m in Sources */,
 				D3BC87A94BF57E522E8A00E2 /* NSDate+Chat.m in Sources */,
 				D3BC829A05A30E6D46E141FB /* CLLocation+String.m in Sources */,

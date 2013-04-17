@@ -23,10 +23,22 @@
 
 @class GMSMapView;
 
-
+/**
+* MapViewController
+*
+* View controller that is presented modally from the ChatViewController. The MapViewController shows all of the
+* connected clients (other users of the app) in a Google Maps view.
+*
+*/
 @interface MapViewController : UIViewController
+
 @property(nonatomic, strong) UIToolbar *toolbar;
 @property(nonatomic, strong) GMSMapView *mapView;
 
-- (void)zoomToClientWithID:(NSString *)string;
+/**
+* Focuses the map on the client with a given ID, if that client is connected.
+*/
+- (void)zoomToClientWithID:(NSString *)clientId;
+
+
 @end

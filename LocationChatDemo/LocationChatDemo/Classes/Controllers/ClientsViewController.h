@@ -21,9 +21,18 @@
 #import <Foundation/Foundation.h>
 #import "ClientTableViewCell.h"
 
-
+/**
+* ClientsViewController
+*
+* Displays a table view list of the clients (users) currently connected to the chat server. For each client, there is a
+*  1) "Locate" button that fetches their current location
+*  2) "Map" button that shows their position in the MapViewController
+*
+*/
 @interface ClientsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ClientTableViewCellDelegate>
+
 @property(strong, readonly) NSArray *clients;
 @property(strong) UITableView *tableView;
 @property(strong) UIToolbar *toolbar;
+
 @end

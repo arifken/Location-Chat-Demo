@@ -26,3 +26,13 @@ extern NSString const *kClientDidDisconnectNotification;
 extern NSString const *kClientDidDUpdateLocationNotification;
 extern NSString const *kClientKey;
 extern NSString const *kClientIDKey;
+
+
+
+extern NSString const *kJSONActionKey;
+extern NSString const *kJSONMessageKey;
+extern NSString const *kJSONClientIDKey;
+extern NSString const *kJSONDateKey;
+extern NSString const *kJSONLocationKey;
+extern NSString const *kJSONTargetKey;
+

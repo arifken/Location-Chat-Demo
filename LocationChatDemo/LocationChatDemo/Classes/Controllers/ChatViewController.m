@@ -20,7 +20,7 @@
 
 #import <CoreLocation/CoreLocation.h>
 #import "ChatViewController.h"
-#import "ChatMessage.h"
+#import "Message.h"
 #import "MapViewController.h"
 #import "ChatNavigationController.h"
 #import "ClientsViewController.h"
@@ -28,18 +28,25 @@
 
 @implementation ChatViewController
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        self.messages = [[NSMutableArray alloc] init];
+    }
+
+    return self;
+}
+
+
+#pragma mark -
+#pragma mark Lifecycle
+//============================================================================================================
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    self.view.backgroundColor = [UIColor whiteColor];
-
-
-    self.navigationItem.title = @"Chat";
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Map" style:UIBarButtonItemStyleBordered target:self action:@selector(viewMapTapped:)];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Clients" style:UIBarButtonItemStyleBordered target:self action:@selector(viewClientsTapped:)];
-
-
-    self.messages = [[NSMutableArray alloc] init];
+    // observers
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
@@ -52,6 +59,15 @@
                                                object:nil];
 
 
+    // view setup
+
+    self.view.backgroundColor = [UIColor whiteColor];
+
+
+    self.navigationItem.title = @"Chat";
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Map" style:UIBarButtonItemStyleBordered target:self action:@selector(viewMapTapped:)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Clients" style:UIBarButtonItemStyleBordered target:self action:@selector(viewClientsTapped:)];
+
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
     self.tableView.dataSource = self;
     self.tableView.delegate = self;
@@ -60,6 +76,9 @@
     self.chatInputView = [[ChatInputView alloc] init];
     self.chatInputView.delegate = self;
     [self.view addSubview:self.chatInputView];
+
+
+    // Layout
 
     NSDictionary *metrics = @{
             @"margin" : [NSNumber numberWithFloat:4.0]
@@ -93,30 +112,6 @@
     [self.view addConstraints:layoutConstraints];
 }
 
-- (void)viewClientsTapped:(id)viewClientsTapped {
-    ClientsViewController *viewController = [[ClientsViewController alloc] init];
-    [self presentViewController:viewController animated:YES completion:^{
-
-    }];
-}
-
-- (void)viewMapTapped:(id)viewMapTapped {
-    MapViewController *mapViewController = [[MapViewController alloc] init];
-    mapViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
-    [self presentViewController:mapViewController animated:YES completion:^{
-
-    }];
-}
-
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -139,7 +134,7 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellID];
     }
-    ChatMessage *message = [self.messages objectAtIndex:indexPath.row];
+    Message *message = [self.messages objectAtIndex:indexPath.row];
 
     BOOL isMe = ([message.clientId isEqualToString:[self myClientID]]);
 
@@ -151,23 +146,22 @@
         cell.textLabel.textAlignment = NSTextAlignmentRight;
     }
 
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ near %@", [message dateString], [message locationString]];
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ near %@", [message dateString], [message reverseGeoString]];
     return cell;
 }
 
-- (NSString *)myClientID {
-    return [[(ChatNavigationController *) [self navigationController] connection] clientId];
-}
+#pragma mark -
+#pragma mark Geocoding
+//============================================================================================================
 
-
-- (void)reverseGeocodeMessage:(ChatMessage *)message {
+- (void)reverseGeocodeMessage:(Message *)message {
 
     CLGeocoder *geocoder = [[CLGeocoder alloc] init];
     __weak ChatViewController *bself = self;
     [geocoder reverseGeocodeLocation:message.location completionHandler:^(NSArray *placemarks, NSError *error) {
         if (placemarks && [placemarks count] > 0 && !error) {
             CLPlacemark *placemark = [placemarks objectAtIndex:0];
-            message.locationString = [NSString stringWithFormat:@"%@, %@", placemark.locality, placemark.administrativeArea];
+            message.reverseGeoString = [NSString stringWithFormat:@"%@, %@", placemark.locality, placemark.administrativeArea];
 
             if ([bself.messages containsObject:message]) {
                 NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[bself.messages indexOfObject:message] inSection:0];
@@ -177,20 +171,14 @@
     }];
 }
 
-- (void)addMessage:(ChatMessage *)message {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.messages addObject:message];
-        [self reverseGeocodeMessage:message];
-        [self.tableView reloadData];
-    });
-}
+
 
 #pragma mark -
-#pragma mark chat events
+#pragma mark UI events
 //============================================================================================================
 
 - (void)chatInputView:(ChatInputView *)view didSendMessage:(NSString *)text {
-    ChatMessage *message = [[ChatMessage alloc] init];
+    Message *message = [[Message alloc] init];
     message.text = text;
     message.clientId = [self myClientID];
     message.location = [(ChatNavigationController *) self.navigationController currentLocation];
@@ -200,6 +188,21 @@
     [[(ChatNavigationController *) [self navigationController] connection] send:message];
 }
 
+
+- (void)viewClientsTapped:(id)viewClientsTapped {
+    ClientsViewController *viewController = [[ClientsViewController alloc] init];
+    [self presentViewController:viewController animated:YES completion:^{
+
+    }];
+}
+
+- (void)viewMapTapped:(id)viewMapTapped {
+    MapViewController *mapViewController = [[MapViewController alloc] init];
+    mapViewController.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentViewController:mapViewController animated:YES completion:^{
+
+    }];
+}
 
 
 #pragma mark -
@@ -232,6 +235,24 @@
         [self.chatInputView.messageField resignFirstResponder];
     }
 }
+
+#pragma mark -
+#pragma mark Accessors/Mutators
+//============================================================================================================
+
+
+- (NSString *)myClientID {
+    return [[(ChatNavigationController *) [self navigationController] connection] clientId];
+}
+
+- (void)addMessage:(Message *)message {
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.messages addObject:message];
+        [self reverseGeocodeMessage:message];
+        [self.tableView reloadData];
+    });
+}
+
 
 
 @end

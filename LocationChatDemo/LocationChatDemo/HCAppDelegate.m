@@ -32,8 +32,10 @@
 
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
+
     UINavigationController *navigationController = [[ChatNavigationController alloc] init];
     self.window.rootViewController = navigationController;
+
     [self.window makeKeyAndVisible];
 
     return YES;

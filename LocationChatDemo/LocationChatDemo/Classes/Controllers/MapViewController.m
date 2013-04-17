@@ -28,8 +28,20 @@
 
 @implementation MapViewController
 
+
+#pragma mark -
+#pragma mark Lifecycle
+//============================================================================================================
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    //---------------------------------------- Configure observers ------------------------------------------------------
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(clientDidConnect:)
@@ -47,22 +59,24 @@
                                                object:nil];
 
 
-    self.view.backgroundColor = [UIColor lightGrayColor];
+    //---------------------------------------- View Setup ------------------------------------------------------
+
+    self.view.backgroundColor = [UIColor whiteColor];
 
 
     self.toolbar = [[UIToolbar alloc] init];
     UIBarButtonItem *space = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:NULL];
     UIBarButtonItem *chatButton = [[UIBarButtonItem alloc] initWithTitle:@"Chat" style:UIBarButtonItemStyleBordered target:self action:@selector(chatButtonTapped:)];
+    self.toolbar.items = @[space, chatButton];
     [self.view addSubview:self.toolbar];
 
-
-    self.toolbar.items = @[space, chatButton];
-
-    //CLLocation *location = [self currentLocation];
 
     self.mapView = [GMSMapView mapWithFrame:self.view.bounds camera:nil];
     self.mapView.myLocationEnabled = YES;
     [self.view addSubview:self.mapView];
+
+
+    //---------------------------------------- Auto Layout ------------------------------------------------------
 
     UIView *toolbar = self.toolbar;
     UIView *mapView = self.mapView;
@@ -108,6 +122,13 @@
 
 }
 
+#pragma mark -
+#pragma mark Actions
+//============================================================================================================
+
+/**
+* Updates the camera position of within the map such that all the annotations (connected users' pins) are visible
+*/
 - (void)zoomToFitAnnotations {
     CLLocationCoordinate2D minPoint;
     CLLocationCoordinate2D maxPoint;
@@ -152,18 +173,32 @@
 }
 
 
-- (void)chatButtonTapped:(id)chatButtonTapped {
-    [self dismissViewControllerAnimated:YES completion:^{
-
-    }];
+/**
+* Updates the camera position by focusing on the pin for a given client ID. If the client cannot be found on the map,
+* this method does nothing
+*/
+- (void)zoomToClientWithID:(NSString *)clientId {
+    id <GMSMarker> marker = [self markerForClientID:clientId];
+    if (marker) {
+        GMSCameraPosition *cameraPosition = [GMSCameraPosition cameraWithLatitude:marker.position.latitude longitude:marker.position.longitude zoom:6];
+        [self.mapView setCamera:cameraPosition];
+    }
 }
+
+
+#pragma mark -
+#pragma mark Accessors/Mutators
+//============================================================================================================
+
 
 - (CLLocation *)currentLocation {
     ChatNavigationController *navController = (ChatNavigationController *) self.presentingViewController;
     return [navController currentLocation];
 }
 
-
+/**
+* Adds a marker to the map for a given Client
+*/
 - (void)addClient:(Client *)client {
     GMSMarkerOptions *options = [[GMSMarkerOptions alloc] init];
     options.position = client.location.coordinate;
@@ -173,6 +208,9 @@
     [self zoomToFitAnnotations];
 }
 
+/**
+* Removes the marker for a given client
+ */
 - (void)removeClientWithID:(NSString *)string {
     id <GMSMarker> markerToRemove = [self markerForClientID:string];
 
@@ -182,6 +220,9 @@
     }
 }
 
+/**
+* Convenience method to map a client to its marker on the map
+*/
 - (id <GMSMarker>)markerForClientID:(NSString *)clientId {
     id <GMSMarker> markerToRemove = nil;
     for (id <GMSMarker> marker in [self.mapView markers]) {
@@ -193,19 +234,24 @@
     return markerToRemove;
 }
 
-- (void)zoomToClientWithID:(NSString *)clientId {
-    id <GMSMarker> marker = [self markerForClientID:clientId];
-    if (marker) {
-        GMSCameraPosition *cameraPosition = [GMSCameraPosition cameraWithLatitude:marker.position.latitude longitude:marker.position.longitude zoom:6];
-        [self.mapView setCamera:cameraPosition];
-    }
-}
 
 #pragma mark -
 #pragma mark Events
 //============================================================================================================
 
+/**
+* The user would like to return to the chat window
+*/
+- (void)chatButtonTapped:(id)chatButtonTapped {
+    [self dismissViewControllerAnimated:YES completion:^{
 
+    }];
+}
+
+
+/**
+* A new client has connected to the server, so add their pin to the map
+*/
 - (void)clientDidConnect:(NSNotification *)notification {
     Client *client = [[notification userInfo] objectForKey:kClientKey];
 
@@ -216,6 +262,9 @@
 }
 
 
+/**
+* A client has disconnected from the server, so remove their pin from the map
+*/
 - (void)clientDidDisconnect:(NSNotification *)notification {
     NSString *clientId = [[notification userInfo] objectForKey:kClientIDKey];
     dispatch_async(dispatch_get_main_queue(), ^{
@@ -225,6 +274,9 @@
 }
 
 
+/**
+* A client has reported an updated location, so update their position on the map
+*/
 - (void)clientDidUpdateLocation:(id)notification {
     Client *client = [[notification userInfo] objectForKey:kClientKey];
 

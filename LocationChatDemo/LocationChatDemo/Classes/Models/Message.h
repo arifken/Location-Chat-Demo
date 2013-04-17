@@ -22,19 +22,31 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 
-@interface ChatMessage : NSObject {
+@interface Message : NSObject {
     NSString *_locationString;
 }
 
-@property(copy) NSString *clientId;
-@property(copy) NSString *text;
-@property(strong) NSDate *date;
-@property(strong) CLLocation *location;
-@property(copy) NSString *locationString;
+@property(strong) NSString *action; // this tells the server what to do with this transmission
+@property(copy) NSString *clientId; // Identifier representing a client (the sender of the message)
+@property(copy) NSString *text; // The body of the message
+@property(strong) NSDate *date; // GMT timestamp for when the message was generated
+@property(strong) CLLocation *location; // (optional) current location of the client at the time the message was posted
+@property(copy) NSString *reverseGeoString; // the "human readable" location, after being reverse geocoded from coords
 
-+ (ChatMessage *)messageWithJSONObject:(NSDictionary *)dict;
+/**
+* Convenience initializer fo generating Message ojects from server responses
+*/
++ (Message *)messageWithJSONObject:(NSDictionary *)dict;
 
+/**
+* Serializes the Message object into a JSON representation (UTF8)
+*/
 - (NSData *)jsonData;
 
+/**
+* Convenience method to return the date in a human readable format
+*/
 - (NSString *)dateString;
+
+
 @end

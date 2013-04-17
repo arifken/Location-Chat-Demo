@@ -21,19 +21,29 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import "ChatInputView.h"
-#import "ChatConnection.h"
+#import "ServerConnection.h"
 
 @class ChatInputView;
-@class ChatConnection;
+@class ServerConnection;
 
+/**
+* View controller that shows a table view of chat messages, with an input box to submit a message
+*
+*/
 @interface ChatViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, ChatInputViewDelegate>
 
 @property(strong) UITableView *tableView;
 @property(strong) ChatInputView *chatInputView;
-@property(strong) NSMutableArray *messages; // ChatMessage objects
+@property(strong) NSMutableArray *messages; // Message objects
 
+// we need to keep the following NSLayoutConstraint objects as ivars so we can add/remove them according to the
+// state of the keyboard in the view
 @property(nonatomic, strong) NSArray *vertLayoutsNoKeyboard;
 @property(nonatomic, strong) NSArray *vertLayoutsKeyboard;
 
-- (void)addMessage:(ChatMessage *)message;
+/**
+* Adds a Message to the chat
+*/
+- (void)addMessage:(Message *)message;
+
 @end

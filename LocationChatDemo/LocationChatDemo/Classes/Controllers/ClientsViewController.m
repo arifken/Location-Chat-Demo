@@ -33,6 +33,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    //---------------------------------------- Set up Observers ------------------------------------------------------
+
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(clientDidConnect:)
                                                  name:(NSString *) kClientDidConnectNotification
@@ -48,6 +50,7 @@
                                                  name:(NSString *) kClientDidDUpdateLocationNotification
                                                object:nil];
 
+    //---------------------------------------- Set up Views ------------------------------------------------------
 
     self.toolbar = [[UIToolbar alloc] init];
     [self.view addSubview:self.toolbar];
@@ -65,6 +68,9 @@
     [self.view addSubview:self.tableView];
 
 
+    //---------------------------------------- Auto Layout ------------------------------------------------------
+
+
     UIView *toolbar = self.toolbar;
     UIView *tableView = self.tableView;
 
@@ -75,26 +81,31 @@
     NSMutableArray *layoutConstraints = [[NSMutableArray alloc] init];
 
     [layoutConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[toolbar][tableView(>=0)]|"
-                                                                                   options:0
+                                                                                   options:(NSLayoutFormatOptions) 0
                                                                                    metrics:nil views:NSDictionaryOfVariableBindings(toolbar, tableView)]];
 
     [layoutConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|[toolbar]|"
-                                                                                   options:0
+                                                                                   options:(NSLayoutFormatOptions) 0
                                                                                    metrics:nil views:NSDictionaryOfVariableBindings(toolbar)]];
 
     [layoutConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|[tableView]|"
-                                                                                   options:0
+                                                                                   options:(NSLayoutFormatOptions) 0
                                                                                    metrics:nil views:NSDictionaryOfVariableBindings(tableView)]];
 
     [self.view addConstraints:layoutConstraints];
 }
 
 
+
 - (void)dismiss:(id)dismiss {
     [self dismissViewControllerAnimated:YES completion:^{
-
     }];
 }
+
+#pragma mark -
+#pragma mark Helpers
+//============================================================================================================
+
 
 - (ChatNavigationController *)navController {
     return (ChatNavigationController *) self.presentingViewController;
@@ -175,14 +186,14 @@
 
 - (void)cellDidTapMapButton:(ClientTableViewCell *)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    Client *client = [self.clients objectAtIndex:indexPath.row];
+    Client *client = [self.clients objectAtIndex:(NSUInteger) indexPath.row];
     [[self navController] showClientOnMap:client.clientId];
 
 }
 
 - (void)cellDidTapLocationButton:(ClientTableViewCell *)cell {
     NSIndexPath *indexPath = [self.tableView indexPathForCell:cell];
-    Client *client = [self.clients objectAtIndex:indexPath.row];
+    Client *client = [self.clients objectAtIndex:(NSUInteger) indexPath.row];
     [[[self navController] connection] requestLocationForClientWithID:client.clientId];
 }
 

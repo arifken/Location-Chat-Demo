@@ -19,23 +19,35 @@
 */
 
 #import <CoreLocation/CoreLocation.h>
-#import "ChatMessage.h"
+#import "Message.h"
 #import "NSDate+Chat.h"
+#import "Constants.h"
 
 
-@implementation ChatMessage
-+ (ChatMessage *)messageWithJSONObject:(NSDictionary *)dict {
-    ChatMessage *ret = [[ChatMessage alloc] init];
+@implementation Message
 
-    ret.clientId = [dict objectForKey:@"cid"];
-    ret.text = [dict objectForKey:@"msg"];
+- (id)init {
+    self = [super init];
+    if (self) {
+        self.action = @"msg"; // default to "chat message" type
+    }
 
-    NSString *dateStr = [dict objectForKey:@"date"];
+    return self;
+}
+
+
++ (Message *)messageWithJSONObject:(NSDictionary *)dict {
+    Message *ret = [[Message alloc] init];
+
+    ret.clientId = [dict objectForKey:kJSONClientIDKey];
+    ret.text = [dict objectForKey:kJSONMessageKey];
+
+    NSString *dateStr = [dict objectForKey:kJSONDateKey];
     if (dateStr) {
         ret.date = [NSDate dateWithTimeIntervalSince1970:[dateStr doubleValue]];
     }
 
-    NSString *locString = [dict objectForKey:@"location"];
+    NSString *locString = [dict objectForKey:kJSONLocationKey];
     NSArray *locComps = [locString componentsSeparatedByString:@","];
     if (locComps && [locComps count] == 2) {
         ret.location = [[CLLocation alloc] initWithCoordinate:CLLocationCoordinate2DMake([[locComps objectAtIndex:0] doubleValue], [[locComps objectAtIndex:1] doubleValue])
@@ -47,35 +59,39 @@
     return ret;
 }
 
-- (NSString *)locationString {
+
+- (NSString *)reverseGeoString {
     if (!_locationString) {
         return @"Location N/A";
     }
     return _locationString;
 }
 
-- (void)setLocationString:(NSString *)locationString {
-    if (_locationString != locationString) {
-        locationString = [locationString mutableCopy];
-        _locationString = locationString;
+- (void)setReverseGeoString:(NSString *)reverseGeoString {
+    if (_locationString != reverseGeoString) {
+        reverseGeoString = [reverseGeoString mutableCopy];
+        _locationString = reverseGeoString;
     }
 }
 
-
 - (NSData *)jsonData {
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-    [dict setObject:@"msg" forKey:@"action"];
+    [dict setObject:self.action forKey:kJSONActionKey];
     if (self.text) {
-        [dict setObject:self.text forKey:@"msg"];
+        [dict setObject:self.text forKey:kJSONMessageKey];
     }
     if (self.clientId) {
-        [dict setObject:self.clientId forKey:@"cid"];
+        [dict setObject:self.clientId forKey:kJSONClientIDKey];
     }
     if (self.location) {
-        [dict setObject:[NSString stringWithFormat:@"%f,%f", self.location.coordinate.latitude, self.location.coordinate.longitude] forKey:@"location"];
+        [dict setObject:[NSString stringWithFormat:@"%f,%f", self.location.coordinate.latitude, self.location.coordinate.longitude] forKey:kJSONLocationKey];
     }
-
-    return [NSJSONSerialization dataWithJSONObject:dict options:0 error:NULL];
+    NSError *error1 = nil;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:0 error:&error1];
+    if (error1) {
+        NSLog(@"***JSON Error: %@",error1);
+    }
+    return data;
 
 }
 
@@ -85,4 +101,5 @@
     }
     return [self.date chatTimestamp];
 }
+
 @end

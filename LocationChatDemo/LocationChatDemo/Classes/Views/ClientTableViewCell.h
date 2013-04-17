@@ -18,19 +18,22 @@
 *
 */
 
+
 #import <Foundation/Foundation.h>
 
-@protocol SignInViewDelegate;
+@protocol ClientTableViewCellDelegate;
 
-@interface SignInView : UIView <UITextFieldDelegate>
 
-@property(nonatomic, strong) UITextField *clientIdField;
-@property(nonatomic, strong) UILabel *promptLabel;
-@property(nonatomic, strong) UIButton *signInButton;
-@property(weak) id <SignInViewDelegate> delegate;
+@interface ClientTableViewCell : UITableViewCell
 
+@property(strong) UIButton *mapButton;
+@property(strong) UIButton *locationButton;
+
+@property(weak) id <ClientTableViewCellDelegate> delegate;
 @end
 
-@protocol SignInViewDelegate
-- (void)signInView:(SignInView *)signInView didLoginWithClientID:(NSString *)clientID;
+
+@protocol ClientTableViewCellDelegate
+-(void)cellDidTapMapButton:(ClientTableViewCell *)cell;
+-(void)cellDidTapLocationButton:(ClientTableViewCell *)cell;
 @end

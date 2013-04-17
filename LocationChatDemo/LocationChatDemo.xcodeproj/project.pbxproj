@@ -35,25 +35,25 @@
 		D3BC82B9A1FDFD8F22D3ECBB /* SignInView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC8E5EB1F901853579ACEE /* SignInView.m */; };
 		D3BC82E74E0C1198D352AFE4 /* ChatMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC8B0AAF81F343A85F55CA /* ChatMessage.m */; };
 		D3BC8309C6186EA4B23BEBB0 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3BC893653486BE38C315FB9 /* SenTestingKit.framework */; };
-		D3BC83B39C794C282B27329B /* 74-location.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BC88E08687590E6D125D2C /* 74-location.png */; };
 		D3BC83D6518338FCBC026A41 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3BC80B74B6FCB41FE417162 /* InfoPlist.strings */; };
 		D3BC84232667A49E770495B1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BC8943DF2C8BD3077B89C9 /* Default-568h@2x.png */; };
+		D3BC842928A06C01F1A67999 /* 74-location.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BC800610A74AD2260BA1E0 /* 74-location.png */; };
 		D3BC849C3F447FFC1011580F /* ChatInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC85081342DE1AB27817C7 /* ChatInputView.m */; };
 		D3BC854921564DAEA1DECFCF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3BC865DA2E451D74E234269 /* UIKit.framework */; };
-		D3BC8591EE0AD6F72034E883 /* 07-map-marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BC828A91ACE773E7D149C3 /* 07-map-marker@2x.png */; };
 		D3BC85939A198ABB1ABC51E4 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC840F69D31A7B7880665F /* MapViewController.m */; };
 		D3BC87A94BF57E522E8A00E2 /* NSDate+Chat.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC8A3FEAD4AFB0DCC57CE1 /* NSDate+Chat.m */; };
 		D3BC87E3FAC823E0E34B41DE /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC86EE346C00AE9330F687 /* ChatViewController.m */; };
-		D3BC88FCED968BE03417CD5E /* 74-location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BC8D374149033AD483147B /* 74-location@2x.png */; };
 		D3BC892DB5D16EA772A64D04 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3BC8092A5D2B84FA0F48585 /* Foundation.framework */; };
 		D3BC8A791D47D13A5F117F65 /* Client.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC8FE9903CABAD24F4A123 /* Client.m */; };
 		D3BC8AA8145B0A6D607F9B49 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BC806769AC1EBF6F547D9C /* Default.png */; };
+		D3BC8AB1A63CF28116DA1DE9 /* 74-location@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BC85B7D57B32BE8FC2DD55 /* 74-location@2x.png */; };
+		D3BC8AED6868C561FD0E16BB /* 07-map-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BC8CA25D203509CC7AD61D /* 07-map-marker.png */; };
 		D3BC8B0BD32E5F915F04F79E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3BC8703846AEAEC473B0379 /* CoreGraphics.framework */; };
+		D3BC8B6704D37BEBCFCA234A /* 07-map-marker@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BC8BDCED33D9F50A290B99 /* 07-map-marker@2x.png */; };
 		D3BC8B9F7BE80777C7EB679E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3BC865DA2E451D74E234269 /* UIKit.framework */; };
 		D3BC8BDE385285F027B30AA6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3BC83FC4E5CCF8660A665A9 /* InfoPlist.strings */; };
 		D3BC8C6B72D886964172BE7E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3BC8092A5D2B84FA0F48585 /* Foundation.framework */; };
-		D3BC8D58E337302FF793E4CC /* ClientTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC89561DCAA2CB41A0FC0F /* ClientTableViewCell.m */; };
-		D3BC8DB14F4356D2E96804D3 /* 07-map-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BC8626F07777E49EF4A35F /* 07-map-marker.png */; };
+		D3BC8E91C2171593BA6116B6 /* ClientTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC80275A98EFA86B8A0919 /* ClientTableViewCell.m */; };
 		D3BC8ECC8C29D2875B65674B /* ChatNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC8DFD3236C1EBBD9C7113 /* ChatNavigationController.m */; };
 		D3BC8EE2C31ECFBDDDBBEAF2 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BC8C7E717E2DD154F4816B /* Default@2x.png */; };
 		D3BC8F9605931BE095F53227 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC8693D4E5F9A9694712C9 /* main.m */; };
@@ -95,11 +95,12 @@
 		6B60D368171E41800014A740 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		6B60D369171E41800014A740 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		6B60D36A171E41800014A740 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		D3BC800610A74AD2260BA1E0 /* 74-location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "74-location.png"; sourceTree = "<group>"; };
+		D3BC80275A98EFA86B8A0919 /* ClientTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientTableViewCell.m; sourceTree = "<group>"; };
 		D3BC806769AC1EBF6F547D9C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		D3BC8092A5D2B84FA0F48585 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D3BC816465FF4FE65A75A9D4 /* LocationChatDemoTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocationChatDemoTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3BC819C7E06444A9E46BAC7 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
-		D3BC828A91ACE773E7D149C3 /* 07-map-marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "07-map-marker@2x.png"; sourceTree = "<group>"; };
 		D3BC82930CD397DF4F57F789 /* LocationChatDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = "LocationChatDemo-Info.plist"; sourceTree = "<group>"; };
 		D3BC83100D90A4E3FB07885D /* NSDate+Chat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Chat.h"; sourceTree = "<group>"; };
 		D3BC83FC726DF705F72834BB /* Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Client.h; sourceTree = "<group>"; };
@@ -107,7 +108,7 @@
 		D3BC841809B4E26995169D9B /* LocationChatDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocationChatDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3BC84C2229584216BD606D2 /* ChatNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatNavigationController.h; sourceTree = "<group>"; };
 		D3BC85081342DE1AB27817C7 /* ChatInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatInputView.m; sourceTree = "<group>"; };
-		D3BC8626F07777E49EF4A35F /* 07-map-marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "07-map-marker.png"; sourceTree = "<group>"; };
+		D3BC85B7D57B32BE8FC2DD55 /* 74-location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "74-location@2x.png"; sourceTree = "<group>"; };
 		D3BC865DA2E451D74E234269 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D3BC865E3293F3A1999A9F71 /* LocationChatDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = "LocationChatDemoTests-Info.plist"; sourceTree = "<group>"; };
 		D3BC866BFCE307FDBA54393E /* ClientsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientsViewController.h; sourceTree = "<group>"; };
@@ -117,22 +118,21 @@
 		D3BC8703846AEAEC473B0379 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		D3BC88477B3B08D78F5C6C7E /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		D3BC8880BFACB742A9035D8E /* CLLocation+String.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocation+String.h"; sourceTree = "<group>"; };
-		D3BC88E08687590E6D125D2C /* 74-location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "74-location.png"; sourceTree = "<group>"; };
 		D3BC893653486BE38C315FB9 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		D3BC8943DF2C8BD3077B89C9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		D3BC89561DCAA2CB41A0FC0F /* ClientTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientTableViewCell.m; sourceTree = "<group>"; };
 		D3BC89D2FCCCB8FA21814EB6 /* SignInView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInView.h; sourceTree = "<group>"; };
 		D3BC8A3FEAD4AFB0DCC57CE1 /* NSDate+Chat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Chat.m"; sourceTree = "<group>"; };
 		D3BC8A52357F49854B88286B /* LocationChatDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LocationChatDemo-Prefix.pch"; sourceTree = "<group>"; };
 		D3BC8A6AB16430BC6796FCD7 /* Constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Constants.h; sourceTree = "<group>"; };
+		D3BC8AED5A46A2CC5BD3BEEA /* ClientTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientTableViewCell.h; sourceTree = "<group>"; };
 		D3BC8AF9EB64D5B3A55FEE85 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D3BC8B0AAF81F343A85F55CA /* ChatMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessage.m; sourceTree = "<group>"; };
-		D3BC8B586D09BA9DE80EC7DD /* ClientTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientTableViewCell.h; sourceTree = "<group>"; };
 		D3BC8B5D5122A920650DE414 /* ChatConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatConnection.h; sourceTree = "<group>"; };
+		D3BC8BDCED33D9F50A290B99 /* 07-map-marker@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "07-map-marker@2x.png"; sourceTree = "<group>"; };
 		D3BC8C1D59AAF03771AB07BC /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
 		D3BC8C7E717E2DD154F4816B /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		D3BC8CA25D203509CC7AD61D /* 07-map-marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "07-map-marker.png"; sourceTree = "<group>"; };
 		D3BC8CEC0453FEE8AFEC428A /* ClientsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientsViewController.m; sourceTree = "<group>"; };
-		D3BC8D374149033AD483147B /* 74-location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "74-location@2x.png"; sourceTree = "<group>"; };
 		D3BC8D614D63FA4C9698758F /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D3BC8DFD3236C1EBBD9C7113 /* ChatNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatNavigationController.m; sourceTree = "<group>"; };
 		D3BC8E5EB1F901853579ACEE /* SignInView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignInView.m; sourceTree = "<group>"; };
@@ -214,7 +214,6 @@
 				D3BC8FAE5210D1F075218693 /* Views */,
 				D3BC8A32D53B344A20C82AF0 /* Models */,
 				D3BC87E15D61109401B79940 /* Services */,
-				D3BC842FF659AB6775C40B7F /* Resources */,
 				D3BC8DE0D5E1D70C63DCEA4B /* Utilities */,
 				D3BC80F1DA016A7B9312061F /* Controllers */,
 			);
@@ -228,21 +227,9 @@
 				6B60D357171E41490014A740 /* HCAppDelegate.m */,
 				D3BC8800A59B77F2B3EDD19C /* Supporting Files */,
 				D3BC822CB9C0EBD17D60BB0F /* Classes */,
+				D3BC8E14B99AB6DF1779B188 /* Resources */,
 			);
 			path = LocationChatDemo;
-			sourceTree = "<group>";
-		};
-		D3BC842FF659AB6775C40B7F /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				D3BC88E08687590E6D125D2C /* 74-location.png */,
-				D3BC8626F07777E49EF4A35F /* 07-map-marker.png */,
-				D3BC8D374149033AD483147B /* 74-location@2x.png */,
-				D3BC828A91ACE773E7D149C3 /* 07-map-marker@2x.png */,
-				D3BC8B586D09BA9DE80EC7DD /* ClientTableViewCell.h */,
-				D3BC89561DCAA2CB41A0FC0F /* ClientTableViewCell.m */,
-			);
-			path = Resources;
 			sourceTree = "<group>";
 		};
 		D3BC8467D3A0607B462BF065 /* Products */ = {
@@ -353,6 +340,17 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		D3BC8E14B99AB6DF1779B188 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D3BC800610A74AD2260BA1E0 /* 74-location.png */,
+				D3BC8CA25D203509CC7AD61D /* 07-map-marker.png */,
+				D3BC85B7D57B32BE8FC2DD55 /* 74-location@2x.png */,
+				D3BC8BDCED33D9F50A290B99 /* 07-map-marker@2x.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		D3BC8FAE5210D1F075218693 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -360,6 +358,8 @@
 				D3BC8E5EB1F901853579ACEE /* SignInView.m */,
 				D3BC8F6AAB53C3D79F848D41 /* ChatInputView.h */,
 				D3BC85081342DE1AB27817C7 /* ChatInputView.m */,
+				D3BC80275A98EFA86B8A0919 /* ClientTableViewCell.m */,
+				D3BC8AED5A46A2CC5BD3BEEA /* ClientTableViewCell.h */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -443,11 +443,11 @@
 				D3BC8AA8145B0A6D607F9B49 /* Default.png in Resources */,
 				D3BC8EE2C31ECFBDDDBBEAF2 /* Default@2x.png in Resources */,
 				D3BC84232667A49E770495B1 /* Default-568h@2x.png in Resources */,
-				D3BC83B39C794C282B27329B /* 74-location.png in Resources */,
-				D3BC8DB14F4356D2E96804D3 /* 07-map-marker.png in Resources */,
-				D3BC88FCED968BE03417CD5E /* 74-location@2x.png in Resources */,
-				D3BC8591EE0AD6F72034E883 /* 07-map-marker@2x.png in Resources */,
 				6B60D352171E405C0014A740 /* GoogleMaps.bundle in Resources */,
+				D3BC842928A06C01F1A67999 /* 74-location.png in Resources */,
+				D3BC8AED6868C561FD0E16BB /* 07-map-marker.png in Resources */,
+				D3BC8AB1A63CF28116DA1DE9 /* 74-location@2x.png in Resources */,
+				D3BC8B6704D37BEBCFCA234A /* 07-map-marker@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -480,7 +480,6 @@
 				D3BC8A791D47D13A5F117F65 /* Client.m in Sources */,
 				D3BC82E74E0C1198D352AFE4 /* ChatMessage.m in Sources */,
 				D3BC8206929AE3F761708409 /* ChatConnection.m in Sources */,
-				D3BC8D58E337302FF793E4CC /* ClientTableViewCell.m in Sources */,
 				D3BC8F9CBF3CC268586F9423 /* Constants.m in Sources */,
 				D3BC87A94BF57E522E8A00E2 /* NSDate+Chat.m in Sources */,
 				D3BC829A05A30E6D46E141FB /* CLLocation+String.m in Sources */,
@@ -490,6 +489,7 @@
 				D3BC8ECC8C29D2875B65674B /* ChatNavigationController.m in Sources */,
 				6B60D358171E41490014A740 /* HCAppDelegate.m in Sources */,
 				6B60D37D171E41A30014A740 /* GCDAsyncSocket.m in Sources */,
+				D3BC8E91C2171593BA6116B6 /* ClientTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

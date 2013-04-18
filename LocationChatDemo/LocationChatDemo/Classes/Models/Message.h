@@ -28,10 +28,13 @@
 
 @property(strong) NSString *action; // this tells the server what to do with this transmission
 @property(copy) NSString *clientId; // Identifier representing a client (the sender of the message)
+@property(copy) NSString *targetClientId; // Optional identifier representing a client that we are trying to communicate with
 @property(copy) NSString *text; // The body of the message
 @property(strong) NSDate *date; // GMT timestamp for when the message was generated
 @property(strong) CLLocation *location; // (optional) current location of the client at the time the message was posted
 @property(copy) NSString *reverseGeoString; // the "human readable" location, after being reverse geocoded from coords
+
+@property(strong) NSArray *clients; // Array of Client objects used when referring to a set of users
 
 /**
 * Convenience initializer fo generating Message ojects from server responses

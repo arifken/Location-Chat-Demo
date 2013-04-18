@@ -31,6 +31,9 @@
 
 @end
 
+/**
+* Delegate interface called when the user taps "sign in" with a given username
+*/
 @protocol SignInViewDelegate
 - (void)signInView:(SignInView *)signInView didLoginWithClientID:(NSString *)clientID;
 @end

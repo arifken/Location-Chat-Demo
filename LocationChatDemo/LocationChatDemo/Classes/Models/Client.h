@@ -22,10 +22,23 @@
 
 @class CLLocation;
 
-
+/**
+* Model object representing a user that is connected to the app.
+*/
 @interface Client : NSObject
+
 @property(copy) NSString *clientId;
 @property(strong) CLLocation *location;
 
+/**
+* Convenience constructor that generates an instance based on a JSON representation received from the server
+*/
 + (Client *)clientWithJSONDictionary:(NSDictionary *)dictionary;
+
+- (BOOL)isEqual:(id)other;
+
+- (BOOL)isEqualToClient:(Client *)client;
+
+- (NSUInteger)hash;
+
 @end

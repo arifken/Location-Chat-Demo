@@ -22,7 +22,15 @@
 #import <CoreLocation/CoreLocation.h>
 
 @interface CLLocation (String)
+
+/**
+* Constructs a CLLocation object using a coordinate string in the format <lat>,<lon>
+*/
 + (CLLocation *)locationWithCoordinateString:(NSString *)str date:(NSDate *)date;
+
+/**
+* Returns a string in the format <lat>,<lon>
+*/
 - (NSString *)coordinatesAsString;
 
 @end

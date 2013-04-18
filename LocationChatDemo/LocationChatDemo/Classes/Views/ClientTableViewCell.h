@@ -23,7 +23,6 @@
 
 @protocol ClientTableViewCellDelegate;
 
-
 @interface ClientTableViewCell : UITableViewCell
 
 @property(strong) UIButton *mapButton;
@@ -32,7 +31,9 @@
 @property(weak) id <ClientTableViewCellDelegate> delegate;
 @end
 
-
+/**
+* Interface that is called when custom events are triggered for this cell (user tapping map button or location button)
+*/
 @protocol ClientTableViewCellDelegate
 -(void)cellDidTapMapButton:(ClientTableViewCell *)cell;
 -(void)cellDidTapLocationButton:(ClientTableViewCell *)cell;

@@ -27,8 +27,12 @@
 @property(weak) id <ChatInputViewDelegate> delegate;
 @property(strong) UITextView *messageField;
 @property(strong) UIButton *sendButton;
+
 @end
 
+/**
+* Delegate interface for when the user taps "send" for a message they have typed
+*/
 @protocol ChatInputViewDelegate
 - (void) chatInputView:(ChatInputView *)view didSendMessage:(NSString*)message;
 @end

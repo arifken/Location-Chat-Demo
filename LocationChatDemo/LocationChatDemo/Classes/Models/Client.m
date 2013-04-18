@@ -21,6 +21,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "Client.h"
 #import "CLLocation+String.h"
+#import "Constants.h"
 
 
 @implementation Client
@@ -29,14 +30,39 @@
 + (Client *)clientWithJSONDictionary:(NSDictionary *)dictionary {
     Client *client = [[Client alloc] init];
 
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:@"date"] doubleValue]];
-    CLLocation *location = [CLLocation locationWithCoordinateString:[dictionary objectForKey:@"location"] date:date];
-    NSString *clientId = [dictionary objectForKey:@"cid"];
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:kJSONDateKey] doubleValue]];
+    CLLocation *location = [CLLocation locationWithCoordinateString:[dictionary objectForKey:kJSONLocationKey] date:date];
+    NSString *clientId = [dictionary objectForKey:kJSONClientIDKey];
 
     client.clientId = clientId;
     client.location = location;
 
     return client;
-
 }
+
+
+- (BOOL)isEqual:(id)other {
+    if (other == self)
+        return YES;
+    if (!other || ![[other class] isEqual:[self class]])
+        return NO;
+
+    return [self isEqualToClient:other];
+}
+
+- (BOOL)isEqualToClient:(Client *)client {
+    if (self == client)
+        return YES;
+    if (client == nil)
+        return NO;
+    if (self.clientId != client.clientId && ![self.clientId isEqualToString:client.clientId])
+        return NO;
+    return YES;
+}
+
+- (NSUInteger)hash {
+    return [self.clientId hash];
+}
+
+
 @end

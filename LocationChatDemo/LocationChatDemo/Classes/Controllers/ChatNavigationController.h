@@ -29,7 +29,7 @@
 @class ChatViewController;
 @class SignInView;
 
-@interface ChatNavigationController : UINavigationController <CLLocationManagerDelegate, ChatConnectionDelegate, SignInViewDelegate> {
+@interface ChatNavigationController : UINavigationController <CLLocationManagerDelegate, ServerConnectionDelegate, SignInViewDelegate> {
     ChatViewController *_chatViewController;
 }
 

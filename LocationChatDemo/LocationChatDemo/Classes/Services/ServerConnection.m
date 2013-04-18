@@ -31,7 +31,7 @@ NSString const *ACTION_DISCONNECTED = @"dis"; // someone disconnected
 NSString const *ACTION_MESSAGE = @"msg"; // a chat message was submitted
 NSString const *ACTION_LOCATION_REQUEST = @"loc_req"; // someone is requesting our current location
 NSString const *ACTION_LOCATION_RESPONSE = @"loc_res"; // someone is broadcasting their location
-NSString const *ACTION_HEARTBEAT= @"hb"; // the server is checking to make sure we are still connected
+NSString const *ACTION_HEARTBEAT = @"hb"; // the server is checking to make sure we are still connected
 
 static const float kDefaultTimeout = -1.0; // set no timeout period for the socket (the server will manage timeouts)
 
@@ -65,9 +65,9 @@ static const float kDefaultTimeout = -1.0; // set no timeout period for the sock
 */
 - (void)connect {
     NSError *error = nil;
-    [self.socket connectToHost:@"localhost" onPort:3000 error:&error];
+    [self.socket connectToHost:(NSString *) kServerHost onPort:3000 error:&error];
     if (error) {
-        NSLog(@"***Error connexcting to host! %@", error);
+        NSLog(@"***Error connecting to host! %@", error);
     }
 }
 
@@ -94,39 +94,51 @@ static const float kDefaultTimeout = -1.0; // set no timeout period for the sock
 }
 
 
-
 - (void)sendLocation:(CLLocation *)location {
     if (self.socket.isConnected && location) {
-        NSDictionary *data = @{
-                @"action" : ACTION_LOCATION_RESPONSE,
-                @"location" : [location coordinatesAsString]
-        };
-        NSError *error = nil;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:0 error:&error];
+//        NSDictionary *data = @{
+//                @"action" : ACTION_LOCATION_RESPONSE,
+//                @"location" : [location coordinatesAsString]
+//        };
+        Message *message = [[Message alloc] init];
+        message.action = (NSString *) ACTION_LOCATION_RESPONSE;
+        message.location = location;
 
-        if (jsonData) {
-            [self.socket writeData:jsonData withTimeout:kDefaultTimeout tag:0];
-        } else {
-            NSLog(@"***JSON Error=%@", error);
-        }
+//        NSError *error = nil;
+//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:0 error:&error];
+        NSData *jsonData = [message jsonData];
+
+//        if (jsonData) {
+        [self.socket writeData:jsonData withTimeout:kDefaultTimeout tag:0];
+//        } else {
+//            NSLog(@"***JSON Error=%@", error);
+//        }
     }
 }
 
 
 - (void)requestLocationForClientWithID:(NSString *)clientId {
     if ([self.socket isConnected] && clientId) {
-        NSDictionary *data = @{
-                @"action" : ACTION_LOCATION_REQUEST,
-                @"target" : clientId
-        };
-        NSError *error = nil;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:0 error:&error];
+//        NSDictionary *data = @{
+//                @"action" : ACTION_LOCATION_REQUEST,
+//                @"target" : clientId
+//        };
 
-        if (jsonData) {
-            [self.socket writeData:jsonData withTimeout:kDefaultTimeout tag:0];
-        } else {
-            NSLog(@"***JSON Error=%@", error);
-        }
+        Message *message = [[Message alloc] init];
+        message.action = (NSString *) ACTION_LOCATION_REQUEST;
+        message.targetClientId = clientId;
+
+
+        NSData *jsonData = [message jsonData];
+//        NSError *error = nil;
+//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:0 error:&error];
+
+
+//        if (jsonData) {
+        [self.socket writeData:jsonData withTimeout:kDefaultTimeout tag:0];
+//        } else {
+//            NSLog(@"***JSON Error=%@", error);
+//        }
     }
 }
 
@@ -135,78 +147,68 @@ static const float kDefaultTimeout = -1.0; // set no timeout period for the sock
 
     NSDictionary *responseObject = [NSJSONSerialization JSONObjectWithData:readData options:0 error:NULL];
     if (responseObject) {
-        NSString *action = [responseObject objectForKey:@"action"];
-        if ([action caseInsensitiveCompare:(NSString *) ACTION_MESSAGE] == NSOrderedSame) {
-            Message *message = [Message messageWithJSONObject:responseObject];
-            [self.delegate chatConnection:self didReceiveMessage:message];
+
+        Message *msg = [Message messageWithJSONObject:responseObject];
+
+        if ([msg.action caseInsensitiveCompare:(NSString *) ACTION_MESSAGE] == NSOrderedSame) {                 // Chat messages
+            [self.delegate chatConnection:self didReceiveChatMessage:msg];
         }
 
-        else if ([action caseInsensitiveCompare:(NSString*)ACTION_HEARTBEAT] == NSOrderedSame) {
-            // reply to server with an identical heartbeat message
+        else if ([msg.action caseInsensitiveCompare:(NSString *) ACTION_HEARTBEAT] == NSOrderedSame) {          // Heartbeat requests
+            // reply to server with an identical heartbeat message (so that they know our connection is still alive)
             [self.socket writeData:readData withTimeout:kDefaultTimeout tag:0];
         }
 
-        else if ([action caseInsensitiveCompare:(NSString *) ACTION_LOCATION_REQUEST] == NSOrderedSame) {
-            NSLog(@"got location request....");
+
+        else if ([msg.action caseInsensitiveCompare:(NSString *) ACTION_LOCATION_REQUEST] == NSOrderedSame) {    // Incoming location requests
             // someone wants to know where we are, so broadcast out the current location
             CLLocation *currentLocation = [self.delegate chatConnectionCurrentLocation:self];
             if (currentLocation) {
-                NSLog(@"...sending back location: %@",currentLocation);
                 [self sendLocation:currentLocation];
             }
         }
 
-        else if ([action caseInsensitiveCompare:(NSString *) ACTION_LOCATION_RESPONSE] == NSOrderedSame) {
-            NSLog(@"got location response...");
-            NSString *locString = [responseObject objectForKey:@"location"];
-            NSString *cid = [responseObject objectForKey:@"cid"];
-            NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[responseObject objectForKey:@"date"] doubleValue]];
-
-            [self.delegate chatConnection:self didReceiveLocation:[CLLocation locationWithCoordinateString:locString date:date] forClientID:cid];
+        else if ([msg.action caseInsensitiveCompare:(NSString *) ACTION_LOCATION_RESPONSE] == NSOrderedSame) {  // location broadcast from other clients
+            Message *message = [Message messageWithJSONObject:responseObject];
+            [self.delegate chatConnection:self didReceiveLocation:message.location forClientID:message.clientId];
         }
 
-        else if ([action caseInsensitiveCompare:(NSString *) ACTION_CONNECTED] == NSOrderedSame) {
+
+        else if ([msg.action caseInsensitiveCompare:(NSString *) ACTION_CONNECTED] == NSOrderedSame) {           // A client just connected
             // check if we connected ourselves, or if someone else connected
-            NSString *clientId = [responseObject objectForKey:@"cid"];
-            if ([clientId caseInsensitiveCompare:self.clientId] == NSOrderedSame) {
+            if ([msg.clientId caseInsensitiveCompare:self.clientId] == NSOrderedSame) {
+
                 // we just connected, need to update state and set connected clients
                 self.connectionState = ChatConnectionStateSignedIn;
-                NSDictionary *clients = [responseObject objectForKey:@"clients"];
-                NSLog(@"clients: %@", clients);
-
-                // parse out current clients
-
-                for (NSDictionary *aClientId in [clients allKeys]) {
-                    NSDictionary *clientDict = [clients objectForKey:aClientId];
-                    Client *newClient = [Client clientWithJSONDictionary:clientDict];
-                    @synchronized (self) {
-                        [_connectedClients addObject:newClient];
+                if (msg.clients) {
+                    @synchronized (_connectedClients) {
+                        [_connectedClients addObjectsFromArray:msg.clients];
                     }
                 }
-
             } else {
-                NSLog(@"%@ connected", clientId);
+                NSLog(@"%@ connected", msg.clientId);
 
                 // someone else just connected, so add them to clients and send event
                 @synchronized (self) {
                     Client *newClient = [[Client alloc] init];
-                    newClient.clientId = clientId;
-                    newClient.location = [CLLocation locationWithCoordinateString:[responseObject objectForKey:@"location"] date:[NSDate dateWithTimeIntervalSince1970:[[responseObject objectForKey:@"date"] doubleValue]]];
-                    [_connectedClients addObject:newClient];
+                    newClient.clientId = msg.clientId;
+                    newClient.location = msg.location;
+                    @synchronized (_connectedClients) {
+                        [_connectedClients addObject:newClient];
+                    }
                     [self.delegate chatConnection:self clientDidConnect:newClient];
                 }
             }
         }
 
-        else if ([action caseInsensitiveCompare:(NSString *) ACTION_DISCONNECTED] == NSOrderedSame) {
+        else if ([msg.action caseInsensitiveCompare:(NSString *) ACTION_DISCONNECTED] == NSOrderedSame) {          // A Client just disconnected
             // someone disconnected
-            NSString *clientId = [responseObject objectForKey:@"cid"];
-            NSLog(@"%@ disconnected", clientId);
+            NSLog(@"%@ disconnected", msg.clientId);
 
-            @synchronized (self) {
+            @synchronized (_connectedClients) {
                 Client *clientToRemove = nil;
                 for (Client *client in _connectedClients) {
-                    if ([client.clientId caseInsensitiveCompare:clientId] == NSOrderedSame) {
+                    if ([client.clientId caseInsensitiveCompare:msg.clientId] == NSOrderedSame) {
                         clientToRemove = client;
                         break;
                     }
@@ -214,7 +216,7 @@ static const float kDefaultTimeout = -1.0; // set no timeout period for the sock
 
                 if (clientToRemove) {
                     [_connectedClients removeObject:clientToRemove];
-                    [self.delegate chatConnection:self clientDidDisconnect:clientId];
+                    [self.delegate chatConnection:self clientDidDisconnect:msg.clientId];
                 }
 
             }
@@ -243,20 +245,15 @@ static const float kDefaultTimeout = -1.0; // set no timeout period for the sock
     NSLog(@"Connected to host %@, port %i", host, port);
     [sock readDataWithTimeout:kDefaultTimeout tag:1];
     CLLocation *location = [self.delegate chatConnectionCurrentLocation:self];
-    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-    [dict setObject:self.clientId forKey:@"cid"];
-    if (location) {
-        NSString *locationString = [location coordinatesAsString];
-        [dict setObject:locationString forKey:@"location"];
-    }
 
-    NSError *error1 = nil;
-    NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:0 error:&error1];
-    if (error1) {
-        NSLog(@"JSON parse error: %@", error1);
-    } else {
-        [sock writeData:data withTimeout:kDefaultTimeout tag:0];
-    }
+    // Send a "sign in" message
+    Message *message = [[Message alloc] init];
+    message.clientId = self.clientId;
+    message.location = location;
+
+    NSData *data = [message jsonData];
+
+    [sock writeData:data withTimeout:kDefaultTimeout tag:0];
 }
 
 /**
@@ -293,8 +290,6 @@ static const float kDefaultTimeout = -1.0; // set no timeout period for the sock
 #pragma mark -
 #pragma mark Helpers
 //============================================================================================================
-
-
 
 - (Client *)myClient {
     return [self clientForID:self.clientId];

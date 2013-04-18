@@ -26,6 +26,9 @@
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
+
+        //---------------------------------------- View setup ------------------------------------------------------
+
         self.mapButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [self.mapButton setBackgroundImage:[UIImage imageNamed:@"07-map-marker"] forState:UIControlStateNormal];
         [self.mapButton addTarget:self action:@selector(mapButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -35,6 +38,9 @@
         [self.locationButton setBackgroundImage:[UIImage imageNamed:@"74-location"] forState:UIControlStateNormal];
         [self.locationButton addTarget:self action:@selector(locationButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [self.contentView addSubview:self.locationButton];
+
+
+        //---------------------------------------- Auto Layout ------------------------------------------------------
 
         UIView *mapButton = self.mapButton;
         UIView *locButton = self.locationButton;

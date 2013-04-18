@@ -22,23 +22,23 @@
 		6B60D374171E41800014A740 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B60D362171E41800014A740 /* CoreData.framework */; };
 		6B60D375171E41800014A740 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B60D363171E41800014A740 /* AVFoundation.framework */; };
 		6B60D376171E41800014A740 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B60D364171E41800014A740 /* Security.framework */; };
-		6B60D377171E41800014A740 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B60D365171E41800014A740 /* UIKit.framework */; };
-		6B60D378171E41800014A740 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B60D366171E41800014A740 /* Foundation.framework */; };
-		6B60D379171E41800014A740 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B60D367171E41800014A740 /* CoreGraphics.framework */; };
-		6B60D37A171E41800014A740 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B60D368171E41800014A740 /* SenTestingKit.framework */; };
 		6B60D37B171E41800014A740 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B60D369171E41800014A740 /* CoreLocation.framework */; };
 		6B60D37C171E41800014A740 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B60D36A171E41800014A740 /* CFNetwork.framework */; };
 		6B60D37D171E41A30014A740 /* GCDAsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B60D354171E41020014A740 /* GCDAsyncSocket.m */; };
+		6B925F39171F63E60092788E /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B925F37171F63DD0092788E /* SenTestingKit.framework */; };
+		6B925F3A171F67010092788E /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B60D369171E41800014A740 /* CoreLocation.framework */; };
+		D3BC819C608EA068FD65645F /* MessageTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC8820A0C977D383FB3264 /* MessageTest.m */; };
+		D3BC81CF822BC3BEA6F7A416 /* ClientTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC86CDF889FC36CC2CE5FB /* ClientTest.m */; };
 		D3BC8206929AE3F761708409 /* ServerConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC8F674B359039019E7BA7 /* ServerConnection.m */; };
 		D3BC8262B7A3513FC0D8E549 /* ClientsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC8CEC0453FEE8AFEC428A /* ClientsViewController.m */; };
 		D3BC829A05A30E6D46E141FB /* CLLocation+String.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC8F3BCB2A62F9D2A66C01 /* CLLocation+String.m */; };
 		D3BC82B9A1FDFD8F22D3ECBB /* SignInView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC8E5EB1F901853579ACEE /* SignInView.m */; };
 		D3BC82E74E0C1198D352AFE4 /* Message.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC8B0AAF81F343A85F55CA /* Message.m */; };
-		D3BC8309C6186EA4B23BEBB0 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3BC893653486BE38C315FB9 /* SenTestingKit.framework */; };
 		D3BC83D6518338FCBC026A41 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D3BC80B74B6FCB41FE417162 /* InfoPlist.strings */; };
 		D3BC84232667A49E770495B1 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BC8943DF2C8BD3077B89C9 /* Default-568h@2x.png */; };
 		D3BC842928A06C01F1A67999 /* 74-location.png in Resources */ = {isa = PBXBuildFile; fileRef = D3BC800610A74AD2260BA1E0 /* 74-location.png */; };
 		D3BC849C3F447FFC1011580F /* ChatInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC85081342DE1AB27817C7 /* ChatInputView.m */; };
+		D3BC8500F3DDCC88C1E035A4 /* ServiceConnectionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC82EC095B45A04ADE97C4 /* ServiceConnectionTest.m */; };
 		D3BC854921564DAEA1DECFCF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3BC865DA2E451D74E234269 /* UIKit.framework */; };
 		D3BC85939A198ABB1ABC51E4 /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC840F69D31A7B7880665F /* MapViewController.m */; };
 		D3BC87A94BF57E522E8A00E2 /* NSDate+Chat.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BC8A3FEAD4AFB0DCC57CE1 /* NSDate+Chat.m */; };
@@ -92,9 +92,9 @@
 		6B60D365171E41800014A740 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		6B60D366171E41800014A740 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6B60D367171E41800014A740 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		6B60D368171E41800014A740 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		6B60D369171E41800014A740 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		6B60D36A171E41800014A740 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		6B925F37171F63DD0092788E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		D3BC800610A74AD2260BA1E0 /* 74-location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "74-location.png"; sourceTree = "<group>"; };
 		D3BC80275A98EFA86B8A0919 /* ClientTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientTableViewCell.m; sourceTree = "<group>"; };
 		D3BC806769AC1EBF6F547D9C /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
@@ -102,24 +102,29 @@
 		D3BC816465FF4FE65A75A9D4 /* LocationChatDemoTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocationChatDemoTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3BC819C7E06444A9E46BAC7 /* Constants.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Constants.m; sourceTree = "<group>"; };
 		D3BC82930CD397DF4F57F789 /* LocationChatDemo-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = "LocationChatDemo-Info.plist"; sourceTree = "<group>"; };
+		D3BC82EC095B45A04ADE97C4 /* ServiceConnectionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServiceConnectionTest.m; sourceTree = "<group>"; };
 		D3BC83100D90A4E3FB07885D /* NSDate+Chat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Chat.h"; sourceTree = "<group>"; };
 		D3BC83FC726DF705F72834BB /* Client.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Client.h; sourceTree = "<group>"; };
 		D3BC840F69D31A7B7880665F /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
 		D3BC841809B4E26995169D9B /* LocationChatDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocationChatDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3BC84C2229584216BD606D2 /* ChatNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatNavigationController.h; sourceTree = "<group>"; };
 		D3BC85081342DE1AB27817C7 /* ChatInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatInputView.m; sourceTree = "<group>"; };
+		D3BC8593B9567AF144A94C9D /* ServiceConnectionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServiceConnectionTest.h; sourceTree = "<group>"; };
 		D3BC85B7D57B32BE8FC2DD55 /* 74-location@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "74-location@2x.png"; sourceTree = "<group>"; };
 		D3BC865DA2E451D74E234269 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D3BC865E3293F3A1999A9F71 /* LocationChatDemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.info; path = "LocationChatDemoTests-Info.plist"; sourceTree = "<group>"; };
 		D3BC866BFCE307FDBA54393E /* ClientsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientsViewController.h; sourceTree = "<group>"; };
 		D3BC8693D4E5F9A9694712C9 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D3BC86987B1E34E951011EDE /* Message.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Message.h; sourceTree = "<group>"; };
+		D3BC86CDF889FC36CC2CE5FB /* ClientTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClientTest.m; sourceTree = "<group>"; };
 		D3BC86EE346C00AE9330F687 /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
 		D3BC8703846AEAEC473B0379 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D3BC8820A0C977D383FB3264 /* MessageTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageTest.m; sourceTree = "<group>"; };
+		D3BC88364332DC909D58D319 /* ClientTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClientTest.h; sourceTree = "<group>"; };
 		D3BC88477B3B08D78F5C6C7E /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
 		D3BC8880BFACB742A9035D8E /* CLLocation+String.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocation+String.h"; sourceTree = "<group>"; };
-		D3BC893653486BE38C315FB9 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		D3BC8943DF2C8BD3077B89C9 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		D3BC8974092B0F10927E7D72 /* MessageTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageTest.h; sourceTree = "<group>"; };
 		D3BC89D2FCCCB8FA21814EB6 /* SignInView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignInView.h; sourceTree = "<group>"; };
 		D3BC8A3FEAD4AFB0DCC57CE1 /* NSDate+Chat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Chat.m"; sourceTree = "<group>"; };
 		D3BC8A52357F49854B88286B /* LocationChatDemo-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LocationChatDemo-Prefix.pch"; sourceTree = "<group>"; };
@@ -147,7 +152,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3BC8309C6186EA4B23BEBB0 /* SenTestingKit.framework in Frameworks */,
+				6B925F3A171F67010092788E /* CoreLocation.framework in Frameworks */,
+				6B925F39171F63E60092788E /* SenTestingKit.framework in Frameworks */,
 				D3BC854921564DAEA1DECFCF /* UIKit.framework in Frameworks */,
 				D3BC8C6B72D886964172BE7E /* Foundation.framework in Frameworks */,
 			);
@@ -173,10 +179,6 @@
 				6B60D374171E41800014A740 /* CoreData.framework in Frameworks */,
 				6B60D375171E41800014A740 /* AVFoundation.framework in Frameworks */,
 				6B60D376171E41800014A740 /* Security.framework in Frameworks */,
-				6B60D377171E41800014A740 /* UIKit.framework in Frameworks */,
-				6B60D378171E41800014A740 /* Foundation.framework in Frameworks */,
-				6B60D379171E41800014A740 /* CoreGraphics.framework in Frameworks */,
-				6B60D37A171E41800014A740 /* SenTestingKit.framework in Frameworks */,
 				6B60D37B171E41800014A740 /* CoreLocation.framework in Frameworks */,
 				6B60D37C171E41800014A740 /* CFNetwork.framework in Frameworks */,
 			);
@@ -204,6 +206,12 @@
 			isa = PBXGroup;
 			children = (
 				D3BC866FE3D86BDF9DAD5AA7 /* Supporting Files */,
+				D3BC82EC095B45A04ADE97C4 /* ServiceConnectionTest.m */,
+				D3BC8593B9567AF144A94C9D /* ServiceConnectionTest.h */,
+				D3BC8820A0C977D383FB3264 /* MessageTest.m */,
+				D3BC8974092B0F10927E7D72 /* MessageTest.h */,
+				D3BC86CDF889FC36CC2CE5FB /* ClientTest.m */,
+				D3BC88364332DC909D58D319 /* ClientTest.h */,
 			);
 			path = LocationChatDemoTests;
 			sourceTree = "<group>";
@@ -287,6 +295,7 @@
 		D3BC8B243ECC67A2C7ED2BE1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6B925F37171F63DD0092788E /* SenTestingKit.framework */,
 				6B60D359171E41800014A740 /* SystemConfiguration.framework */,
 				6B60D35A171E41800014A740 /* QuartzCore.framework */,
 				6B60D35B171E41800014A740 /* OpenGLES.framework */,
@@ -302,7 +311,6 @@
 				6B60D365171E41800014A740 /* UIKit.framework */,
 				6B60D366171E41800014A740 /* Foundation.framework */,
 				6B60D367171E41800014A740 /* CoreGraphics.framework */,
-				6B60D368171E41800014A740 /* SenTestingKit.framework */,
 				6B60D369171E41800014A740 /* CoreLocation.framework */,
 				6B60D36A171E41800014A740 /* CFNetwork.framework */,
 				6B60D351171E405C0014A740 /* GoogleMaps.bundle */,
@@ -310,7 +318,6 @@
 				D3BC865DA2E451D74E234269 /* UIKit.framework */,
 				D3BC8092A5D2B84FA0F48585 /* Foundation.framework */,
 				D3BC8703846AEAEC473B0379 /* CoreGraphics.framework */,
-				D3BC893653486BE38C315FB9 /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -408,6 +415,9 @@
 /* Begin PBXProject section */
 		D3BC8DD915C5B8DB56682F90 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0460;
+			};
 			buildConfigurationList = D3BC8359F68CC4CCD713C6DE /* Build configuration list for PBXProject "LocationChatDemo" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -497,6 +507,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3BC8500F3DDCC88C1E035A4 /* ServiceConnectionTest.m in Sources */,
+				D3BC819C608EA068FD65645F /* MessageTest.m in Sources */,
+				D3BC81CF822BC3BEA6F7A416 /* ClientTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -541,6 +554,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LocationChatDemo/LocationChatDemo-Prefix.pch";
 				INFOPLIST_FILE = "LocationChatDemo/LocationChatDemo-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -557,6 +574,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LocationChatDemo/LocationChatDemo-Prefix.pch";
 				INFOPLIST_FILE = "LocationChatDemoTests/LocationChatDemoTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -574,6 +595,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LocationChatDemo/LocationChatDemo-Prefix.pch";
 				INFOPLIST_FILE = "LocationChatDemoTests/LocationChatDemoTests-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = octest;
@@ -617,6 +642,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LocationChatDemo/LocationChatDemo-Prefix.pch";
 				INFOPLIST_FILE = "LocationChatDemo/LocationChatDemo-Info.plist";
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

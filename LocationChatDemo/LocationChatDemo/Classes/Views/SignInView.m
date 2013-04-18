@@ -27,6 +27,9 @@
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+
+        //---------------------------------------- View setup ------------------------------------------------------
+
         self.backgroundColor = [UIColor whiteColor];
 
         self.layer.cornerRadius = 8.0;
@@ -57,7 +60,8 @@
         [self addSubview:self.signInButton];
 
 
-        // layout
+        //---------------------------------------- Auto layout ------------------------------------------------------
+
         UIView *pl = self.promptLabel;
         UIView *fld = self.clientIdField;
         UIView *btn = self.signInButton;
@@ -96,6 +100,18 @@
     return self;
 }
 
+
+- (CGSize)intrinsicContentSize {
+    [self layoutIfNeeded];
+
+    CGFloat height = CGRectGetMaxY(self.signInButton.frame) + 12.0;
+    return CGSizeMake(250, height);
+}
+
+#pragma mark -
+#pragma mark Events
+//============================================================================================================
+
 - (void)signInTapped:(id)signInTapped {
     [self.delegate signInView:self didLoginWithClientID:self.clientIdField.text];
 
@@ -106,12 +122,6 @@
     return NO;
 }
 
-- (CGSize)intrinsicContentSize {
-    [self layoutIfNeeded];
-
-    CGFloat height = CGRectGetMaxY(self.signInButton.frame) + 12.0;
-    return CGSizeMake(250, height);
-}
 
 
 @end

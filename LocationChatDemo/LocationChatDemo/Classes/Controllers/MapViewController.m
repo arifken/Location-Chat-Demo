@@ -70,7 +70,6 @@
     self.toolbar.items = @[space, chatButton];
     [self.view addSubview:self.toolbar];
 
-
     self.mapView = [GMSMapView mapWithFrame:self.view.bounds camera:nil];
     self.mapView.myLocationEnabled = YES;
     [self.view addSubview:self.mapView];

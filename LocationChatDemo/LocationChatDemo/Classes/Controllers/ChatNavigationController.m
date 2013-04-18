@@ -145,7 +145,7 @@
 //============================================================================================================
 
 
-- (void)chatConnection:(ServerConnection *)conn didReceiveMessage:(Message *)message {
+- (void)chatConnection:(ServerConnection *)conn didReceiveChatMessage:(Message *)message {
     // if the message has a location, update the client's location...
     Client *client = [self.connection clientForID:message.clientId];
     if (message.location) {

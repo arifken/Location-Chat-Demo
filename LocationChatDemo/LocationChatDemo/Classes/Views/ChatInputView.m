@@ -29,6 +29,8 @@
     self = [super initWithFrame:frame];
     if (self) {
 
+        //---------------------------------------- View setup ------------------------------------------------------
+
         self.messageField = [[UITextView alloc] init];
         self.messageField.layer.borderColor = [[UIColor blackColor] CGColor];
         self.messageField.layer.borderWidth = 1.0f;
@@ -44,6 +46,7 @@
         [self.sendButton addTarget:self action:@selector(didTapSend:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:self.sendButton];
 
+        //---------------------------------------- Layout ------------------------------------------------------
 
         UIView *fld = self.messageField;
         UIView *btn = self.sendButton;
@@ -80,11 +83,10 @@
     return self;
 }
 
-- (void)didTapSend:(id)didTapSend {
-    [self.delegate chatInputView:self didSendMessage:self.messageField.text];
-    self.messageField.text = nil;
-}
-
+/**
+* Calculate the height needed to accomodate all the text in the text field, plus margin. The parent view will use
+* this to determine the size of this input view
+*/
 - (CGSize)intrinsicContentSize {
     CGFloat width = self.frame.size.width;
 
@@ -94,6 +96,15 @@
 
 
     return CGSizeMake(width, (fldHeight > btnHeight) ? fldHeight : btnHeight);
+}
+
+#pragma mark -
+#pragma mark Events
+//============================================================================================================
+
+- (void)didTapSend:(id)didTapSend {
+    [self.delegate chatInputView:self didSendMessage:self.messageField.text];
+    self.messageField.text = nil;
 }
 
 - (void)textViewDidChange:(UITextView *)textView {

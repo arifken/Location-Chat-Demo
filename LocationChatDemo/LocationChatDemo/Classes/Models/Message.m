@@ -22,6 +22,7 @@
 #import "Message.h"
 #import "NSDate+Chat.h"
 #import "Constants.h"
+#import "Client.h"
 
 
 @implementation Message
@@ -38,6 +39,8 @@
 
 + (Message *)messageWithJSONObject:(NSDictionary *)dict {
     Message *ret = [[Message alloc] init];
+
+    ret.action = [dict objectForKey:kJSONActionKey];
 
     ret.clientId = [dict objectForKey:kJSONClientIDKey];
     ret.text = [dict objectForKey:kJSONMessageKey];
@@ -56,6 +59,18 @@
                                              verticalAccuracy:kCLLocationAccuracyBest
                                                     timestamp:ret.date];
     }
+
+
+    // parse out current clients
+    NSDictionary *clientJSONObjs = [dict objectForKey:@"clients"];
+    NSMutableArray *addedClients = [[NSMutableArray alloc] init];
+    for (NSDictionary *aClientId in [clientJSONObjs allKeys]) {
+        NSDictionary *clientDict = [clientJSONObjs objectForKey:aClientId];
+        Client *newClient = [Client clientWithJSONDictionary:clientDict];
+        [addedClients addObject:newClient];
+    }
+    ret.clients = [NSArray arrayWithArray:addedClients];
+
     return ret;
 }
 
@@ -83,13 +98,20 @@
     if (self.clientId) {
         [dict setObject:self.clientId forKey:kJSONClientIDKey];
     }
+    if (self.targetClientId) {
+        [dict setObject:self.targetClientId forKey:kJSONTargetKey];
+    }
     if (self.location) {
         [dict setObject:[NSString stringWithFormat:@"%f,%f", self.location.coordinate.latitude, self.location.coordinate.longitude] forKey:kJSONLocationKey];
+    }
+    if (self.date) {
+        NSTimeInterval value = [self.date timeIntervalSince1970];
+        [dict setObject:[NSNumber numberWithDouble:value] forKey:kJSONDateKey];
     }
     NSError *error1 = nil;
     NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:0 error:&error1];
     if (error1) {
-        NSLog(@"***JSON Error: %@",error1);
+        NSLog(@"***JSON Error: %@", error1);
     }
     return data;
 

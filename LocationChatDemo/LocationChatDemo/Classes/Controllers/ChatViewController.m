@@ -93,17 +93,17 @@
     NSMutableArray *layoutConstraints = [[NSMutableArray alloc] init];
 
     [layoutConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|[tv]|"
-                                                                                   options:0
+                                                                                   options:(NSLayoutFormatOptions) 0
                                                                                    metrics:metrics
                                                                                      views:NSDictionaryOfVariableBindings(tv)]];
 
     [layoutConstraints addObjectsFromArray:[NSLayoutConstraint constraintsWithVisualFormat:@"|[civ]|"
-                                                                                   options:0
+                                                                                   options:(NSLayoutFormatOptions) 0
                                                                                    metrics:metrics
                                                                                      views:NSDictionaryOfVariableBindings(civ)]];
 
     self.vertLayoutsNoKeyboard = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tv(>=100)]-[civ]|"
-                                                                         options:0
+                                                                         options:(NSLayoutFormatOptions) 0
                                                                          metrics:metrics
                                                                            views:NSDictionaryOfVariableBindings(tv, civ)];
 
@@ -134,7 +134,7 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellID];
     }
-    Message *message = [self.messages objectAtIndex:indexPath.row];
+    Message *message = [self.messages objectAtIndex:(NSUInteger) indexPath.row];
 
     BOOL isMe = ([message.clientId isEqualToString:[self myClientID]]);
 
@@ -213,21 +213,31 @@
 - (void)keyboardWillShow:(NSNotification *)notification {
     UIView *tv = self.tableView;
     UIView *civ = self.chatInputView;
+    NSTimeInterval duration = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+
     CGFloat keyboardHeight = [[[notification userInfo] objectForKey:UIKeyboardFrameEndUserInfoKey] CGRectValue].size.height;
 
     self.vertLayoutsKeyboard = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[tv(>=100)]-[civ]-(keyboardHeight)-|"
-                                                                       options:0
+                                                                       options:(NSLayoutFormatOptions) 0
                                                                        metrics:@{@"keyboardHeight" : [NSNumber numberWithFloat:keyboardHeight]}
                                                                          views:NSDictionaryOfVariableBindings(tv, civ)];
     [self.view removeConstraints:self.vertLayoutsNoKeyboard];
     [self.view addConstraints:self.vertLayoutsKeyboard];
-    [self.view invalidateIntrinsicContentSize];
+    [UIView animateWithDuration:duration animations:^{
+        [self.view invalidateIntrinsicContentSize];
+        [self.view layoutIfNeeded];
+    }];
 }
 
-- (void)keyboardWillHide:(NSNotification *)keyboardWillHide {
+- (void)keyboardWillHide:(NSNotification *)notification {
+    NSTimeInterval duration = [[[notification userInfo] objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+
     [self.view removeConstraints:self.vertLayoutsKeyboard];
     [self.view addConstraints:self.vertLayoutsNoKeyboard];
-    [self.view invalidateIntrinsicContentSize];
+    [UIView animateWithDuration:duration animations:^{
+        [self.view invalidateIntrinsicContentSize];
+        [self.view layoutIfNeeded];
+    }];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {

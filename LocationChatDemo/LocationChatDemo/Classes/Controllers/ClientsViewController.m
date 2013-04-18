@@ -96,15 +96,39 @@
 }
 
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    for (Client *client in self.clients) {
+        [self reverseGeocodeClient:client];
+    }
+}
 
 - (void)dismiss:(id)dismiss {
     [self dismissViewControllerAnimated:YES completion:^{
     }];
 }
 
+
 #pragma mark -
 #pragma mark Helpers
 //============================================================================================================
+
+- (void)reverseGeocodeClient:(Client *)client {
+
+    CLGeocoder *geocoder = [[CLGeocoder alloc] init];
+    __weak ClientsViewController *bself = self;
+    [geocoder reverseGeocodeLocation:client.location completionHandler:^(NSArray *placemarks, NSError *error) {
+        if (placemarks && [placemarks count] > 0 && !error) {
+            CLPlacemark *placemark = [placemarks objectAtIndex:0];
+            client.reverseGeoString = [NSString stringWithFormat:@"%@, %@", placemark.locality, placemark.administrativeArea];
+
+            if ([bself.clients containsObject:client]) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForRow:[bself.clients indexOfObject:client] inSection:0];
+                [bself.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+            }
+        }
+    }];
+}
 
 
 - (ChatNavigationController *)navController {
@@ -148,10 +172,14 @@
         dateString = [date chatTimestamp];
     } else {
         dateString = @"N/A";
-
     }
 
-    NSString *locationString = [NSString stringWithFormat:@"%f,%f", location.coordinate.latitude, location.coordinate.longitude];
+    NSString *locationString;
+    if (client.reverseGeoString) {
+        locationString = client.reverseGeoString;
+    } else {
+        locationString = [NSString stringWithFormat:@"%f,%f", location.coordinate.latitude, location.coordinate.longitude];
+    }
 
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ at %@", dateString, locationString];
 
@@ -162,21 +190,26 @@
 #pragma mark Events
 //============================================================================================================
 
-- (void)clientDidDisconnect:(id)clientDidDisconnect {
+- (void)clientDidDisconnect:(NSNotification *)notification {
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
     });
 }
 
-- (void)clientDidConnect:(id)clientDidConnect {
+- (void)clientDidConnect:(NSNotification*)notification {
+    Client *client = [[notification userInfo] objectForKey:kClientKey];
+
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
+        [self reverseGeocodeClient:client];
     });
 }
 
-- (void)clientDidUpdateLocation:(id)clientDidUpdateLocation {
+- (void)clientDidUpdateLocation:(NSNotification*)notification {
+    Client *client = [[notification userInfo] objectForKey:kClientKey];
     dispatch_async(dispatch_get_main_queue(), ^{
         [self.tableView reloadData];
+        [self reverseGeocodeClient:client];
     });
 }
 

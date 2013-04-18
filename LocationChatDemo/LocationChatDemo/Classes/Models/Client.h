@@ -25,10 +25,14 @@
 /**
 * Model object representing a user that is connected to the app.
 */
-@interface Client : NSObject
+@interface Client : NSObject {
+    CLLocation *_location;
+}
 
 @property(copy) NSString *clientId;
 @property(strong) CLLocation *location;
+
+@property(copy) NSString *reverseGeoString; // Transient property to store reverse-geocoded location
 
 /**
 * Convenience constructor that generates an instance based on a JSON representation received from the server

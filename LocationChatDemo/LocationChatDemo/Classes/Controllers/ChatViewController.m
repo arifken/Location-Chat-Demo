@@ -24,6 +24,8 @@
 #import "MapViewController.h"
 #import "ChatNavigationController.h"
 #import "ClientsViewController.h"
+#import "Constants.h"
+#import "Client.h"
 
 
 @implementation ChatViewController
@@ -57,6 +59,12 @@
                                              selector:@selector(keyboardWillHide:)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(clientDidUpdateLocation:)
+                                                 name:kClientDidDUpdateLocationNotification
+                                               object:nil];
+
 
 
     // view setup
@@ -133,6 +141,7 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellID];
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellID];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
     }
     Message *message = [self.messages objectAtIndex:(NSUInteger) indexPath.row];
 
@@ -174,7 +183,7 @@
 
 
 #pragma mark -
-#pragma mark UI events
+#pragma mark Events
 //============================================================================================================
 
 - (void)chatInputView:(ChatInputView *)view didSendMessage:(NSString *)text {
@@ -204,6 +213,10 @@
     }];
 }
 
+- (void)clientDidUpdateLocation:(NSNotification*)clientDidUpdateLocation {
+    Client *client = [[clientDidUpdateLocation userInfo] objectForKey:kClientKey];
+    NSLog(@"Client %@ updated location to %@",client.clientId, client.location);
+}
 
 #pragma mark -
 #pragma mark keyboard

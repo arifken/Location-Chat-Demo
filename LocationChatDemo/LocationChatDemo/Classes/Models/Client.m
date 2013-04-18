@@ -24,6 +24,8 @@
 #import "Constants.h"
 
 
+static const CLLocationDistance kDistanceThresholdToClearGeocodedLocation = 1000;
+
 @implementation Client
 
 
@@ -62,6 +64,27 @@
         NSLog(@"***Error serializing client object: %@",data);
     }
     return data;
+}
+
+- (CLLocation *)location {
+    return _location;
+}
+
+- (void)setLocation:(CLLocation *)location {
+    // check if we need to reset the reverse geo string based on distance change...
+    if (location) {
+        if (self.reverseGeoString && _location) {
+            CLLocationDistance distance = [_location distanceFromLocation:location];
+            if (distance > kDistanceThresholdToClearGeocodedLocation) {
+                self.reverseGeoString = nil;
+            }
+        }
+    } else {
+        // nil location, so nil geo string
+        self.reverseGeoString = nil;
+    }
+
+    _location = location;
 }
 
 

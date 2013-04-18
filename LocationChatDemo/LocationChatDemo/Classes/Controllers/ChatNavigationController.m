@@ -107,6 +107,12 @@
     [self connectIfNeeded];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self connectionStateDidChange];
+}
+
+
 - (void)dealloc {
     [self.locationManager stopUpdatingLocation];
     [self.connection removeObserver:self forKeyPath:@"connectionState"];
@@ -184,13 +190,6 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *) kClientDidDisconnectNotification object:nil userInfo:@{
             kClientIDKey : clientId
     }];
-
-    // if we disconnected, show sign in prompt
-//    if ([clientId caseInsensitiveCompare:[self.connection clientId]] == NSOrderedSame) {
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            self.connection.clientId = nil;
-//        });
-//    }
 }
 
 - (void)chatConnnection:(ServerConnection *)conn didReceiveError:(NSError *)error {
@@ -208,6 +207,7 @@
 
 - (void)signInView:(SignInView *)signInView didLoginWithClientID:(NSString *)clientID {
     self.connection.clientId = clientID;
+    [signInView.clientIdField resignFirstResponder];
     [self connectIfNeeded];
 }
 
@@ -215,8 +215,28 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context {
     if (object == self.connection && [keyPath isEqualToString:@"connectionState"]) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            self.signInView.hidden = (self.connection.connectionState != ChatConnectionStateDisconnected);
+            [self connectionStateDidChange];
+
         });
+    }
+}
+
+- (void)connectionStateDidChange {
+    BOOL isConnected = self.connection.connectionState != ChatConnectionStateDisconnected;
+    self.signInView.hidden = isConnected;
+    _chatViewController.navigationItem.leftBarButtonItem.enabled = isConnected;
+    _chatViewController.navigationItem.rightBarButtonItem.enabled = isConnected;
+    _chatViewController.chatInputView.userInteractionEnabled = isConnected;
+    if (!isConnected && [_chatViewController.chatInputView.messageField isFirstResponder]) {
+        [_chatViewController.chatInputView.messageField resignFirstResponder];
+    }
+
+    if (self.connection.connectionState == ChatConnectionStateDisconnected) {
+        // go back to chat screen and lock UI
+        if (self.presentedViewController) {
+            [self dismissViewControllerAnimated:YES completion:^{
+            }];
+        }
     }
 }
 

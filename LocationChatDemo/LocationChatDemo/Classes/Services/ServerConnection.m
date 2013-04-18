@@ -48,6 +48,7 @@ static const float kDefaultTimeout = -1.0; // set no timeout period for the sock
         self.socket = [[GCDAsyncSocket alloc] init];
         self.socket.delegate = self;
         self.socket.delegateQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_LOW, 0);
+        self.connectionState = ChatConnectionStateDisconnected;
         _connectedClients = [[NSMutableArray alloc] init];
     }
 
@@ -279,7 +280,9 @@ static const float kDefaultTimeout = -1.0; // set no timeout period for the sock
         [_connectedClients removeAllObjects];
     }
     NSLog(@"socketDidDisconnect, error = %@", err);
-    [self.delegate chatConnection:self clientDidDisconnect:self.clientId];
+    if (self.clientId) {
+        [self.delegate chatConnection:self clientDidDisconnect:self.clientId];
+    }
     self.connectionState = ChatConnectionStateDisconnected;
     if (err) {
         [self.delegate chatConnnection:self didReceiveError:err];

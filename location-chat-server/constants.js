@@ -18,25 +18,30 @@
  *
  */
 
+module.exports = {
 
-/**
- * Client
- *
- * Model object representing a client connected to the application
- *
- */
-function Client() {
-    if (arguments.length > 0) {
-        this.cid = arguments[0];
+    action: {
+        MESSAGE: 'msg', // action indicating a chat message has been sent by a user to the "chat room"
+        DISCONNECT: 'dis', // action fired when a user is disconnected from the server
+        CONNECT: 'con', // action fired when a user connects to the server
+        LOCATION_REQUEST: 'loc_req', // action fired when a user is requesting an updated location from another user
+        LOCATION_BROADCAST: 'loc_res', // action fired when a user broadcasts their updated location to the server
+        HEARTBEAT: 'hb' // action sent and received from client indicating they are still connected
+    },
+
+    key: {
+        ACTION: 'action',
+        MESSAGE: 'msg',
+        CLIENT_ID: 'cid',
+        DATE: 'date',
+        LOCATION: 'location',
+        TARGET: 'target',
+        CLIENTS: 'clients'
+    },
+
+    setting: {
+        CONNECTION_TIMEOUT: 20 // 20 seconds of inactivity forces connection close
+        , HEARTBEAT_CHECK_INTERVAL: 5000 // check for dropped connections every 5 seconds
     }
 
-    if (arguments.length > 1) {
-        this.location = arguments[1];
-    }
-
-    if (arguments.length > 2) {
-        this.locationDate = arguments[2];
-    }
 }
-
-module.exports = Client;

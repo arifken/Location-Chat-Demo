@@ -30,14 +30,38 @@
 + (Client *)clientWithJSONDictionary:(NSDictionary *)dictionary {
     Client *client = [[Client alloc] init];
 
-    NSDate *date = [NSDate dateWithTimeIntervalSince1970:[[dictionary objectForKey:kJSONDateKey] doubleValue]];
-    CLLocation *location = [CLLocation locationWithCoordinateString:[dictionary objectForKey:kJSONLocationKey] date:date];
-    NSString *clientId = [dictionary objectForKey:kJSONClientIDKey];
+    NSNumber *dateNum = [dictionary objectForKey:kJSONDateKey];
+    if (dateNum) {
+        NSDate *date = [NSDate dateWithTimeIntervalSince1970:[dateNum doubleValue]];
+        NSString *locationStr = [dictionary objectForKey:kJSONLocationKey];
+        CLLocation *location = [CLLocation locationWithCoordinateString:locationStr date:date];
+        client.location = location;
+    }
 
+    NSString *clientId = [dictionary objectForKey:kJSONClientIDKey];
     client.clientId = clientId;
-    client.location = location;
+
 
     return client;
+}
+
+- (NSData*)jsonData {
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+
+    if (self.location) {
+        [dict setObject:[self.location coordinatesAsString] forKey:kJSONLocationKey];
+    }
+
+    if (self.clientId) {
+        [dict setObject:self.clientId forKey:kJSONClientIDKey];
+    }
+
+    NSError *error1 = nil;
+    NSData *data = [NSJSONSerialization dataWithJSONObject:dict options:0 error:&error1];
+    if (error1) {
+        NSLog(@"***Error serializing client object: %@",data);
+    }
+    return data;
 }
 
 

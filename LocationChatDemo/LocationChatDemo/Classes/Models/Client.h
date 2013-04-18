@@ -35,6 +35,8 @@
 */
 + (Client *)clientWithJSONDictionary:(NSDictionary *)dictionary;
 
+- (NSData *)jsonData;
+
 - (BOOL)isEqual:(id)other;
 
 - (BOOL)isEqualToClient:(Client *)client;

@@ -91,7 +91,9 @@
 
 - (NSData *)jsonData {
     NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-    [dict setObject:self.action forKey:kJSONActionKey];
+    if (self.action) {
+        [dict setObject:self.action forKey:kJSONActionKey];
+    }
     if (self.text) {
         [dict setObject:self.text forKey:kJSONMessageKey];
     }

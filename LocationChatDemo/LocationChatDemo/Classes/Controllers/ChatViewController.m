@@ -19,6 +19,7 @@
 */
 
 #import <CoreLocation/CoreLocation.h>
+#import <CoreGraphics/CoreGraphics.h>
 #import "ChatViewController.h"
 #import "Message.h"
 #import "MapViewController.h"
@@ -62,7 +63,7 @@
 
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(clientDidUpdateLocation:)
-                                                 name:kClientDidDUpdateLocationNotification
+                                                 name:(NSString *) kClientDidDUpdateLocationNotification
                                                object:nil];
 
 
@@ -142,22 +143,47 @@
     if (!cell) {
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellID];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        cell.textLabel.numberOfLines = 0;
+        cell.textLabel.font = [self messageFont];
     }
     Message *message = [self.messages objectAtIndex:(NSUInteger) indexPath.row];
 
-    BOOL isMe = ([message.clientId isEqualToString:[self myClientID]]);
-
-    if (isMe) {
-        cell.textLabel.text = message.text;
-        cell.textLabel.textAlignment = NSTextAlignmentLeft;
-    } else {
-        cell.textLabel.text = [NSString stringWithFormat:@"(%@) %@", message.clientId, message.text];
-        cell.textLabel.textAlignment = NSTextAlignmentRight;
-    }
+    cell.textLabel.text = [self cellTextForMessage:message];
 
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@ near %@", [message dateString], [message reverseGeoString]];
     return cell;
 }
+
+- (UIFont *)messageFont {
+    return [UIFont systemFontOfSize:15];
+}
+
+- (NSString *)cellTextForMessage:(Message *)message {
+    BOOL isMe = ([message.clientId isEqualToString:[self myClientID]]);
+
+    if (isMe) {
+        return message.text;
+    }
+    return [NSString stringWithFormat:@"(%@) %@", message.clientId, message.text];
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat margin = 8.0;
+    CGFloat height = margin * 2;
+
+
+    NSString *messageText = [self cellTextForMessage:[self.messages objectAtIndex:indexPath.row]];
+    CGFloat msgHeight = [messageText sizeWithFont:[self messageFont]
+                                constrainedToSize:CGSizeMake(tableView.frame.size.width - margin * 2, 1000)
+                                    lineBreakMode:NSLineBreakByWordWrapping].height;
+
+    CGFloat detailHeight = [@"Location String" sizeWithFont:[UIFont systemFontOfSize:15]].height;
+
+    height += (msgHeight + 4.0 + detailHeight);
+
+    return height;
+}
+
 
 #pragma mark -
 #pragma mark Geocoding
@@ -195,6 +221,8 @@
 
     NSLog(@"sending message: %@", message);
     [[(ChatNavigationController *) [self navigationController] connection] send:message];
+
+    [self.view layoutIfNeeded];
 }
 
 
@@ -213,9 +241,9 @@
     }];
 }
 
-- (void)clientDidUpdateLocation:(NSNotification*)clientDidUpdateLocation {
+- (void)clientDidUpdateLocation:(NSNotification *)clientDidUpdateLocation {
     Client *client = [[clientDidUpdateLocation userInfo] objectForKey:kClientKey];
-    NSLog(@"Client %@ updated location to %@",client.clientId, client.location);
+    NSLog(@"Client %@ updated location to %@", client.clientId, client.location);
 }
 
 #pragma mark -
@@ -275,7 +303,6 @@
         [self.tableView reloadData];
     });
 }
-
 
 
 @end

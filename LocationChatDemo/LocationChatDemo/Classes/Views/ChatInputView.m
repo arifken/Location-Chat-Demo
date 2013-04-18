@@ -105,6 +105,8 @@
 - (void)didTapSend:(id)didTapSend {
     [self.delegate chatInputView:self didSendMessage:self.messageField.text];
     self.messageField.text = nil;
+    [self invalidateIntrinsicContentSize];
+    [self layoutIfNeeded];
 }
 
 - (void)textViewDidChange:(UITextView *)textView {
